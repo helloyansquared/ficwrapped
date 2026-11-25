@@ -88,6 +88,61 @@ if product:
 (pub / 'index.html').write_text(finish(s))
 (pub / 'c.js').write_text(finish((root / 'src/c.js').read_text()))
 
+# ── userscript (Greasy Fork): core.js + collector inlined, nothing loaded from elsewhere ──
+USERSCRIPT_VERSION = '1.0.' + str(int(hashlib.sha1((pub / 'core.js').read_bytes() + (root / 'src/c.js').read_bytes()).hexdigest()[:6], 16) % 100000)
+collector = finish((root / 'src/c.js').read_text())
+collector = (collector.replace('tap the FicWrapped bookmark again', 'click “Make my AO3 Wrapped” again')
+                      .replace('then tap the bookmark again', 'then click "Make my AO3 Wrapped" again')
+                      .replace('and tap the bookmark again', 'and click "Make my AO3 Wrapped" again')
+                      .replace('Log in again and tap the bookmark.', 'Log in again and click “Make my AO3 Wrapped”.'))
+collector = collector.replace('(function () {\n  "use strict";', 'function ficwrappedStart() {\n  "use strict";', 1)
+assert collector.rstrip().endswith('})();'), 'collector wrapper changed'
+collector = collector.rstrip()[:-len('})();')] + '}\n'
+(pub / 'ficwrapped.user.js').write_text(f"""// ==UserScript==
+// @name         AO3 Wrapped by FicWrapped (no password)
+// @namespace    {site}
+// @version      {USERSCRIPT_VERSION}
+// @description  Make a Spotify-Wrapped-style year in review of your AO3 reading. Reads your own History pages in this tab, never asks for your password, and opens your cards on FicWrapped.
+// @author       yesyanyan (YanSquared)
+// @license      MIT
+// @homepageURL  {site}
+// @supportURL   {C.GITHUB}/issues
+// @match        https://archiveofourown.org/*
+// @match        https://www.archiveofourown.org/*
+// @match        https://ao3.org/*
+// @grant        none
+// @run-at       document-idle
+// ==/UserScript==
+
+/* What this script does
+   - Adds a "Make my AO3 Wrapped" link to your AO3 user menu and to your History page.
+   - When you click it, it reads your own History pages (/users/YOU/readings) in this tab, about one page a second,
+     and pauses if AO3 asks it to slow down.
+   - When it's done, "Open my Wrapped" opens {site} in a new tab and hands the list to that tab with postMessage.
+     Nothing is sent to any server, and it never reads your password or cookies.
+   The same code runs as the FicWrapped bookmark: {site}c.js and {site}core.js. Source: {C.GITHUB} */
+
+{(pub / 'core.js').read_text()}
+
+{collector}
+(function () {{
+  var g = document.querySelector('#greeting a[href^="/users/"]');
+  if (!g) return; // logged out: AO3 History is only visible to you while logged in
+  function link(text) {{
+    var a = document.createElement("a"); a.href = "#"; a.textContent = text;
+    a.addEventListener("click", function (e) {{ e.preventDefault(); ficwrappedStart(); }});
+    return a;
+  }}
+  var menu = document.querySelector('#greeting ul.menu, #greeting .dropdown-menu');
+  if (menu) {{ var li = document.createElement("li"); li.appendChild(link("Make my AO3 Wrapped")); menu.appendChild(li); }}
+  if (/^\\/users\\/[^/]+\\/readings/.test(location.pathname)) {{
+    var h = document.querySelector('#main h2.heading, #main h2');
+    if (h) {{ var p = document.createElement("p"); p.appendChild(link("✦ Make my AO3 Wrapped")); h.insertAdjacentElement("afterend", p); }}
+  }}
+}})();
+""")
+
+
 # ── Sub-pages ─────────────────────────────────────────────────────────────────
 PAGE_CSS = FONT_FACES + """:root{--ink:#1d1b36;--paper:#fffefa;--violet:#7b5cff;--sun:#ffd23f;--coral:#ff6b57;--mint:#3ddc97;--lilac:#e9e4ff;--soft:#55506e;--bg:#f2efff}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.7 Literata,Georgia,serif}

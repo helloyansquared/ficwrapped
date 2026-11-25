@@ -1,0 +1,61 @@
+// End-to-end (userscript): fake AO3 (fixture pages) + local site, run the real bookmarklet, open Wrapped in a popup.
+const { chromium } = require('playwright');
+const fs = require('fs'), path = require('path');
+const { page: ao3page, SAMPLE } = require('./fixture.js');
+const PUB = path.join(__dirname, '..', 'public');
+const mime = f => ({ '.js': 'application/javascript', '.html': 'text/html', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.png': 'image/png' })[path.extname(f)] || 'text/plain';
+(async () => {
+  const b = await chromium.launch({ executablePath: '/usr/bin/google-chrome' });
+  const ctx = await b.newContext({ viewport: { width: 1200, height: 900 } });
+  const errs = [];
+  // 3 pages of history; page 3 holds a 2025 entry so the year cut-off stops there
+  const many = Array.from({ length: 20 }, (_, i) => ({ ...SAMPLE[0], id: 500 + i, t: 'Fic ' + i, lv: '1' + (i % 9) + ' Oct 2026', v: 1 + (i % 3) }));
+  const pages = { 1: ao3page(many, { pageNo: 1, last: 3 }), 2: ao3page(SAMPLE.slice(0, 4), { pageNo: 2, last: 3 }), 3: ao3page(SAMPLE.slice(4), { pageNo: 3, last: 3 }) };
+  let hits = 0, page429 = true;
+  await ctx.route('https://archiveofourown.org/**', async route => {
+    const u = new URL(route.request().url());
+    if (u.pathname.endsWith('/readings')) {
+      hits++;
+      const n = +(u.searchParams.get('page') || 1);
+      if (n === 2 && page429) { page429 = false; return route.fulfill({ status: 429, headers: { 'Retry-After': '1' }, body: 'Retry later' }); }
+      return route.fulfill({ status: 200, contentType: 'text/html', body: pages[n] || ao3page([], { pageNo: n, last: 3 }) });
+    }
+    return route.fulfill({ status: 200, contentType: 'text/html', body: '<html><body><ul><li id="greeting" class="dropdown"><a href="/users/me">Hi, me!</a><ul class="menu"><li><a href="/users/me">My Dashboard</a></li></ul></li></ul><h1>AO3 home</h1></body></html>' });
+  });
+  await ctx.route('https://ficwrapped.yansquared.com/**', async route => {
+    const u = new URL(route.request().url());
+    let f = path.join(PUB, decodeURIComponent(u.pathname));
+    if (u.pathname.startsWith('/api/')) return route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":false,"error":"not_found"}' });
+    if (fs.existsSync(f) && fs.statSync(f).isDirectory()) f = path.join(f, 'index.html');
+    if (!fs.existsSync(f)) return route.fulfill({ status: 404, body: 'nf' });
+    return route.fulfill({ status: 200, contentType: mime(f), body: fs.readFileSync(f) });
+  });
+  const p = await ctx.newPage();
+  p.on('pageerror', e => errs.push('ao3: ' + e.message));
+  await p.goto('https://archiveofourown.org/');
+  // what the userscript does
+  await p.addScriptTag({ content: fs.readFileSync(path.join(PUB, 'ficwrapped.user.js'), 'utf8') });
+  const menuLink = await p.$eval('#greeting ul.menu li:last-child a', a => a.textContent);
+  if (menuLink !== 'Make my AO3 Wrapped') throw new Error('menu link missing: ' + menuLink);
+  const scriptTags = await p.$$eval('script[src]', s => s.map(x => x.src));
+  await p.click('#greeting ul.menu li:last-child a');
+  await p.waitForFunction(() => document.querySelector('#ficwrapped-panel') && document.querySelector('#ficwrapped-panel').shadowRoot.getElementById('start'));
+  await p.evaluate(() => document.querySelector('#ficwrapped-panel').shadowRoot.getElementById('start').click());
+  await p.waitForFunction(() => document.querySelector('#ficwrapped-panel').shadowRoot.getElementById('open'), null, { timeout: 30000 });
+  const doneText = await p.evaluate(() => document.querySelector('#ficwrapped-panel').shadowRoot.querySelector('h2').textContent);
+  const [pop] = await Promise.all([ctx.waitForEvent('page'), p.evaluate(() => document.querySelector('#ficwrapped-panel').shadowRoot.getElementById('open').click())]);
+  pop.on('pageerror', e => errs.push('site: ' + e.message));
+  await pop.waitForFunction(() => document.getElementById('wrapped').classList.contains('on'), null, { timeout: 15000 });
+  const res = await pop.evaluate(() => ({ title: document.getElementById('wTitle').textContent, works: STATS.works, ids: IDS.length, saved: !!localStorage.getItem('fw-data') }));
+  const [dl] = await Promise.all([pop.waitForEvent('download'), pop.click('#csv')]);
+  const csvText = fs.readFileSync(await dl.path(), 'utf8');
+  res.freeCsvRows = csvText.trim().split('\n').length - 1;
+  res.csvVisible = await pop.isVisible('#csv');
+  res.packHasPro = await pop.evaluate(() => document.getElementById('pack').classList.contains('pro'));
+  await pop.locator('#export').screenshot({ path: '/tmp/e2e-export.png' });
+  await pop.screenshot({ path: '/tmp/e2e-wrapped.png' });
+  const extra = await p.$$eval('script[src]', s => s.map(x => x.src)); res.externalScripts = extra;
+  console.log(JSON.stringify({ doneText, hits, res, errs }));
+  if (res.externalScripts.length || res.works !== 23 || errs.length || !res.csvVisible || res.packHasPro || res.freeCsvRows < 23) process.exit(1);
+  await b.close();
+})();
