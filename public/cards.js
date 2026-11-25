@@ -40,7 +40,7 @@
       for (let i = 0; i < total; i++) { ctx.globalAlpha = i <= idx ? 1 : 0.25; ctx.fillRect(M + i * (tw + 8), 52, tw, 8); }
       ctx.globalAlpha = 1;
     }
-    if (!opts.clean) { font(ctx, 30, 600, D); ctx.globalAlpha = 0.8; ctx.fillText("ficwrapped.pages.dev", M, H - 78); ctx.globalAlpha = 1; }
+    if (!opts.clean) { font(ctx, 30, 600, D); ctx.globalAlpha = 0.8; ctx.fillText("ficwrapped.yansquared.com", M, H - 78); ctx.globalAlpha = 1; }
     else { font(ctx, 30, 600, D); ctx.globalAlpha = 0.55; ctx.fillText("FicWrapped", M, H - 78); ctx.globalAlpha = 1; }
     squares(ctx, W - M - 64, H - 122, 28);
   }

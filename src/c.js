@@ -1,6 +1,6 @@
 /* FicWrapped collector. The FicWrapped bookmark loads this file on archiveofourown.org.
    It reads YOUR History pages (/users/you/readings) in this tab, slowly, the same way you would by
-   clicking "Next", and hands the result to ficwrapped.pages.dev in a new tab.
+   clicking "Next", and hands the result to ficwrapped.yansquared.com in a new tab.
    It never reads or sends your password, cookies or anything outside your History, and it sends
    nothing to any server: the data goes straight from this tab to the FicWrapped tab you open. */
 (function () {

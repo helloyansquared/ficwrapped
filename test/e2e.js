@@ -22,7 +22,7 @@ const mime = f => ({ '.js': 'application/javascript', '.html': 'text/html', '.wo
     }
     return route.fulfill({ status: 200, contentType: 'text/html', body: '<html><body><ul><li id="greeting"><a href="/users/me">Hi, me!</a></li></ul><h1>AO3 home</h1></body></html>' });
   });
-  await ctx.route('https://ficwrapped.pages.dev/**', async route => {
+  await ctx.route('https://ficwrapped.yansquared.com/**', async route => {
     const u = new URL(route.request().url());
     let f = path.join(PUB, decodeURIComponent(u.pathname));
     if (u.pathname.startsWith('/api/')) return route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":false,"error":"not_found"}' });
@@ -34,7 +34,7 @@ const mime = f => ({ '.js': 'application/javascript', '.html': 'text/html', '.wo
   p.on('pageerror', e => errs.push('ao3: ' + e.message));
   await p.goto('https://archiveofourown.org/');
   // what the bookmark does
-  await p.evaluate(() => { var s = document.createElement('script'); s.src = 'https://ficwrapped.pages.dev/c.js?t=' + Date.now(); document.body.appendChild(s); });
+  await p.evaluate(() => { var s = document.createElement('script'); s.src = 'https://ficwrapped.yansquared.com/c.js?t=' + Date.now(); document.body.appendChild(s); });
   await p.waitForFunction(() => document.querySelector('#ficwrapped-panel') && document.querySelector('#ficwrapped-panel').shadowRoot.getElementById('start'));
   await p.evaluate(() => document.querySelector('#ficwrapped-panel').shadowRoot.getElementById('start').click());
   await p.waitForFunction(() => document.querySelector('#ficwrapped-panel').shadowRoot.getElementById('open'), null, { timeout: 30000 });

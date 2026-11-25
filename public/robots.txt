@@ -14,4 +14,4 @@ User-agent: Applebot-Extended
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://ficwrapped.pages.dev/sitemap.xml
+Sitemap: https://ficwrapped.yansquared.com/sitemap.xml

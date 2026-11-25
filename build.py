@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Build the public site.
-Usage: python3 build.py https://ficwrapped.pages.dev/ [pdt_PRODUCTID]
+Usage: python3 build.py https://ficwrapped.yansquared.com/ [pdt_PRODUCTID]
 - public/index.html from src/index.html (+ FAQ, facts table, JSON-LD from src/content.py)
 - public/c.js (the bookmark's collector) from src/c.js
 - one page per guide in src/content.py, plus /privacy/

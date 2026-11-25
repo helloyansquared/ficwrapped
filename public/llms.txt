@@ -32,15 +32,15 @@ AO3 Wrapped is a fan-made, Spotify-Wrapped-style year in review of your reading 
 - Does not show site-wide AO3 statistics such as the yearly top ships lists; it shows the user's own reading.
 
 ## Pages
-- [Tool: make your AO3 Wrapped](https://ficwrapped.pages.dev/)
-- [How do I do AO3 Wrapped?](https://ficwrapped.pages.dev/how-to-do-ao3-wrapped/) (updated 2026-11-25): AO3 Wrapped tutorial for 2026: add a bookmark, click it on AO3, save your cards. About a minute, free, and nobody gets your AO3 password.
-- [How do I get AO3 Wrapped on my phone?](https://ficwrapped.pages.dev/ao3-wrapped-on-phone/) (updated 2026-11-25): Make your AO3 Wrapped on an iPhone, iPad or Android phone: save the FicWrapped bookmark in Safari or Chrome, or paste your History pages. No password, no app.
-- [Can I get AO3 Wrapped without giving my password?](https://ficwrapped.pages.dev/ao3-wrapped-without-password/) (updated 2026-11-25): Yes. How password websites, Colab notebooks, browser extensions, bookmarklets and paste tools make an AO3 Wrapped, and which ones never see your AO3 login.
-- [Can I still get my AO3 Wrapped for 2025?](https://ficwrapped.pages.dev/ao3-wrapped-2025/) (updated 2026-11-25): You can make an AO3 Wrapped for 2025 or any earlier year, but it will be incomplete. Why AO3 History moves reread fics to the latest year, and how to do it.
-- [Can other people see my AO3 History?](https://ficwrapped.pages.dev/can-people-see-my-ao3-history/) (updated 2026-11-25): Only you can see your AO3 History, while logged in. Where to find it, what it records, and how to delete entries, clear it or switch it off.
-- [Can I export my AO3 History?](https://ficwrapped.pages.dev/ao3-history-export/) (updated 2026-11-25): AO3 has no export button for History or Marked for Later. How to save your AO3 History as a CSV spreadsheet or an offline page for free.
-- [Is AO3 Wrapped safe to use?](https://ficwrapped.pages.dev/is-ao3-wrapped-safe/) (updated 2026-11-25): Is AO3 Wrapped safe? It depends on the method. What password sites, Colab notebooks, extensions, bookmarklets and paste tools can each see on your account.
-- [Privacy and refunds](https://ficwrapped.pages.dev/privacy/)
+- [Tool: make your AO3 Wrapped](https://ficwrapped.yansquared.com/)
+- [How do I do AO3 Wrapped?](https://ficwrapped.yansquared.com/how-to-do-ao3-wrapped/) (updated 2026-11-25): AO3 Wrapped tutorial for 2026: add a bookmark, click it on AO3, save your cards. About a minute, free, and nobody gets your AO3 password.
+- [How do I get AO3 Wrapped on my phone?](https://ficwrapped.yansquared.com/ao3-wrapped-on-phone/) (updated 2026-11-25): Make your AO3 Wrapped on an iPhone, iPad or Android phone: save the FicWrapped bookmark in Safari or Chrome, or paste your History pages. No password, no app.
+- [Can I get AO3 Wrapped without giving my password?](https://ficwrapped.yansquared.com/ao3-wrapped-without-password/) (updated 2026-11-25): Yes. How password websites, Colab notebooks, browser extensions, bookmarklets and paste tools make an AO3 Wrapped, and which ones never see your AO3 login.
+- [Can I still get my AO3 Wrapped for 2025?](https://ficwrapped.yansquared.com/ao3-wrapped-2025/) (updated 2026-11-25): You can make an AO3 Wrapped for 2025 or any earlier year, but it will be incomplete. Why AO3 History moves reread fics to the latest year, and how to do it.
+- [Can other people see my AO3 History?](https://ficwrapped.yansquared.com/can-people-see-my-ao3-history/) (updated 2026-11-25): Only you can see your AO3 History, while logged in. Where to find it, what it records, and how to delete entries, clear it or switch it off.
+- [Can I export my AO3 History?](https://ficwrapped.yansquared.com/ao3-history-export/) (updated 2026-11-25): AO3 has no export button for History or Marked for Later. How to save your AO3 History as a CSV spreadsheet or an offline page for free.
+- [Is AO3 Wrapped safe to use?](https://ficwrapped.yansquared.com/is-ao3-wrapped-safe/) (updated 2026-11-25): Is AO3 Wrapped safe? It depends on the method. What password sites, Colab notebooks, extensions, bookmarklets and paste tools can each see on your account.
+- [Privacy and refunds](https://ficwrapped.yansquared.com/privacy/)
 
 Source code: https://github.com/helloyansquared/ficwrapped
 Related: [FicToEpub, AO3 HTML to EPUB converter](https://fictoepub.pages.dev/) · [BotToBook, Character.AI chats to PDF and EPUB](https://bottobook.yansquared.com/)

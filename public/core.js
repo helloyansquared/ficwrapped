@@ -1,5 +1,5 @@
 /* FicWrapped core: reads AO3 History pages and turns them into year-in-review stats.
-   Runs in the browser (on AO3 via the bookmark, or on ficwrapped.pages.dev) and in Node tests.
+   Runs in the browser (on AO3 via the bookmark, or on ficwrapped.yansquared.com) and in Node tests.
    Nothing here talks to any server. */
 (function (root, factory) {
   if (typeof module === "object" && module.exports) module.exports = factory();

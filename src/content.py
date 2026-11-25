@@ -49,7 +49,7 @@ QA = {
     "official": ("Is there an official AO3 Wrapped?",
         "No. AO3 doesn't make a personal year-in-review. Every AO3 Wrapped is fan-made from your AO3 History. FicWrapped is one of them: it reads your History in your own browser and turns it into shareable cards, without asking for your password."),
     "how": ("How do I do AO3 Wrapped?",
-        "Drag the AO3 Wrapped bookmark from ficwrapped.pages.dev to your bookmarks bar, open AO3 while logged in and click it. It reads your History pages for the year, then you click Open my Wrapped to see and save your cards. It takes about a minute for most readers."),
+        "Drag the AO3 Wrapped bookmark from ficwrapped.yansquared.com to your bookmarks bar, open AO3 while logged in and click it. It reads your History pages for the year, then you click Open my Wrapped to see and save your cards. It takes about a minute for most readers."),
     "password": ("Does FicWrapped need my AO3 password?",
         "No. You log in to AO3 yourself, on AO3, as usual. The bookmark runs in that AO3 tab, reads only your History pages and passes the list to the FicWrapped tab you open. It never sees your password or cookies, and nothing is uploaded to a server."),
     "nopass": ("Is there an AO3 Wrapped that doesn't need my password?",
@@ -67,7 +67,7 @@ QA = {
     "free": ("Is FicWrapped free?",
         "Yes, the whole Wrapped is free. An optional $3.99 Supporter Pack adds a printable poster and cards without the web address. Saving your History as a CSV or an offline page is free."),
     "safe": ("Is it safe to run a bookmark on AO3?",
-        "A bookmark runs code in the AO3 tab, so only use ones you can read. FicWrapped's script is short, published at ficwrapped.pages.dev/c.js and on GitHub, and it only fetches your own History pages. If you'd rather not run any code on AO3, use the paste option."),
+        "A bookmark runs code in the AO3 tab, so only use ones you can read. FicWrapped's script is short, published at ficwrapped.yansquared.com/c.js and on GitHub, and it only fetches your own History pages. If you'd rather not run any code on AO3, use the paste option."),
     "blocked": ("Will AO3 block me for using it?",
         "FicWrapped reads your History at about the pace of someone clicking Next, and it backs off when AO3 says to retry later. That's far gentler than downloading fics. If AO3 is down or under maintenance, wait and try again later."),
     "lastyear": ("Can I make an AO3 Wrapped for last year?",
@@ -268,7 +268,7 @@ PAGES = [
 <p>More detail and how to spot a tool that wants your login: <a href="/ao3-wrapped-without-password/">AO3 Wrapped without a password</a>.</p>
 <h2>What FicWrapped's bookmark does</h2>
 <ul>
-<li>Loads two small files from ficwrapped.pages.dev: <a href="/c.js">c.js</a> (the box you see) and <a href="/core.js">core.js</a> (reads the pages).</li>
+<li>Loads two small files from ficwrapped.yansquared.com: <a href="/c.js">c.js</a> (the box you see) and <a href="/core.js">core.js</a> (reads the pages).</li>
 <li>Fetches only <code>/users/your-name/readings</code> pages, about one a second, plus Marked for Later if you tick it.</li>
 <li>Passes the list to the FicWrapped tab you open with <code>postMessage</code>. No server receives it.</li>
 <li>Doesn't read your password, cookies, messages, drafts or anything else on your account.</li>

@@ -1,6 +1,6 @@
 # FicWrapped: AO3 Wrapped 2026 without your password
 
-**FicWrapped is a free, open-source AO3 Wrapped. It turns your Archive of Our Own History into Spotify-Wrapped-style cards inside your own browser. It never asks for your AO3 password and uploads nothing.** Try it at **https://ficwrapped.pages.dev/**.
+**FicWrapped is a free, open-source AO3 Wrapped. It turns your Archive of Our Own History into Spotify-Wrapped-style cards inside your own browser. It never asks for your AO3 password and uploads nothing.** Try it at **https://ficwrapped.yansquared.com/**.
 
 AO3 Wrapped is a fan-made year in review of your reading on Archive of Our Own (AO3). As of November 2026, AO3 has no official one.
 
@@ -12,7 +12,7 @@ AO3 Wrapped is a fan-made year in review of your reading on Archive of Our Own (
 
 ## Quick start
 
-1. Open https://ficwrapped.pages.dev/ and drag the **✦ AO3 Wrapped** button to your bookmarks bar. Phone steps: https://ficwrapped.pages.dev/ao3-wrapped-on-phone/
+1. Open https://ficwrapped.yansquared.com/ and drag the **✦ AO3 Wrapped** button to your bookmarks bar. Phone steps: https://ficwrapped.yansquared.com/ao3-wrapped-on-phone/
 2. Open archiveofourown.org while logged in and click the bookmark.
 3. Click **Read my History**. It reads your History pages (25 works each, about one page a second).
 4. Click **Open my Wrapped**, then save or share your cards.
@@ -50,9 +50,9 @@ AO3 Wrapped is a fan-made year in review of your reading on Archive of Our Own (
 
 - **Is there an official AO3 Wrapped?** No. Every AO3 Wrapped is fan-made from your AO3 History.
 - **Does it need my password?** No. You log in to AO3 yourself; the bookmark runs in that tab and passes the list to the FicWrapped tab.
-- **Does it work on a phone?** Yes: Safari and Chrome bookmarks, or paste mode. https://ficwrapped.pages.dev/ao3-wrapped-on-phone/
-- **Can I make last year's?** Partly. AO3 keeps only the last visit date, so fics you reopened this year have moved. https://ficwrapped.pages.dev/ao3-wrapped-2025/
-- **Is it safe?** What each kind of tool can see: https://ficwrapped.pages.dev/is-ao3-wrapped-safe/
+- **Does it work on a phone?** Yes: Safari and Chrome bookmarks, or paste mode. https://ficwrapped.yansquared.com/ao3-wrapped-on-phone/
+- **Can I make last year's?** Partly. AO3 keeps only the last visit date, so fics you reopened this year have moved. https://ficwrapped.yansquared.com/ao3-wrapped-2025/
+- **Is it safe?** What each kind of tool can see: https://ficwrapped.yansquared.com/is-ao3-wrapped-safe/
 
 ## Supporter Pack
 
@@ -61,7 +61,7 @@ The Wrapped is free. An optional $3.99 Supporter Pack (Dodo Payments; the licens
 ## Development
 
 ```
-python3 build.py https://ficwrapped.pages.dev/ pdt_PRODUCTID   # writes public/
+python3 build.py https://ficwrapped.yansquared.com/ pdt_PRODUCTID   # writes public/
 node test/core.test.js                                          # parser + stats
 NODE_PATH=$(npm root -g) node test/e2e.js                       # bookmarklet against a mocked AO3 (Playwright)
 ```
