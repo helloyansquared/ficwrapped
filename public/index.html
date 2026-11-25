@@ -305,7 +305,7 @@ footer a{color:#fff}
 <script>
 "use strict";
 const SITE = "https://ficwrapped.pages.dev/";
-const PRODUCT_ID = "__PRODUCT_ID__";
+const PRODUCT_ID = "pdt_0NsiSlDsGlc7yRarwQrRL";
 const BUY_URL = PRODUCT_ID.startsWith("pdt_") ? `https://checkout.dodopayments.com/buy/${PRODUCT_ID}?quantity=1&redirect_url=${encodeURIComponent(SITE + "?unlock=1")}` : "";
 const BOOKMARKLET = `javascript:(function(){var s=document.createElement('script');s.src='${SITE}c.js?t='+Date.now();document.body.appendChild(s);})();`;
 const $ = id => document.getElementById(id);
