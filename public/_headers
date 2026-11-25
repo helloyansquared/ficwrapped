@@ -15,3 +15,7 @@ https://:version.ficwrapped.pages.dev/*
   Cache-Control: public, max-age=31536000, immutable
 /c.js
   Cache-Control: public, max-age=300
+/logo.png
+  Access-Control-Allow-Origin: *
+/og.png
+  Access-Control-Allow-Origin: *
