@@ -56,7 +56,7 @@ AO3 Wrapped is a fan-made year in review of your reading on Archive of Our Own (
 
 ## Supporter Pack
 
-The Wrapped is free. An optional $3.99 Supporter Pack (Dodo Payments; the license key is checked by the Pages Function in `functions/api/license.js`) adds a printable A4 poster (PDF/PNG), cards without the web address, and a CSV plus a searchable offline page of your loaded History.
+The Wrapped is free. An optional $3.99 Supporter Pack (Dodo Payments; the license key is checked by the Pages Function in `functions/api/license.js`) adds a printable A4 poster (PDF/PNG) and cards without the web address. The History CSV and the searchable offline History page are free.
 
 ## Development
 

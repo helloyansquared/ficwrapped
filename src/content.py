@@ -65,7 +65,7 @@ QA = {
     "slow": ("How long does it take?",
         "About one second per History page of 25 fics, so 400 fics take around 20 seconds. If AO3 asks it to slow down, FicWrapped waits and continues on its own. You can also stop early and use what's loaded."),
     "free": ("Is FicWrapped free?",
-        "Yes, the whole Wrapped is free. An optional $3.99 Supporter Pack adds a printable poster, cards without the web address, and a CSV and offline copy of your loaded History."),
+        "Yes, the whole Wrapped is free. An optional $3.99 Supporter Pack adds a printable poster and cards without the web address. Saving your History as a CSV or an offline page is free."),
     "safe": ("Is it safe to run a bookmark on AO3?",
         "A bookmark runs code in the AO3 tab, so only use ones you can read. FicWrapped's script is short, published at ficwrapped.pages.dev/c.js and on GitHub, and it only fetches your own History pages. If you'd rather not run any code on AO3, use the paste option."),
     "blocked": ("Will AO3 block me for using it?",
@@ -234,19 +234,19 @@ PAGES = [
         "crumb": "Export your AO3 History",
         "title": "How to Export Your AO3 History to CSV (2026) | FicWrapped",
         "h1": "Can I export my AO3 History?",
-        "description": "AO3 has no export button for History or Marked for Later. How to save your AO3 History as a CSV spreadsheet or an offline page, free or with FicWrapped.",
-        "answer": "AO3 has no export button for your History or Marked for Later list. To keep a copy, save each History page from your browser, or use FicWrapped's bookmark to read them all at once; its optional Supporter Pack saves them as a CSV spreadsheet and a searchable offline page, with a link to each fic.",
+        "description": "AO3 has no export button for History or Marked for Later. How to save your AO3 History as a CSV spreadsheet or an offline page for free.",
+        "answer": "AO3 has no export button for your History or Marked for Later list. To keep a copy, save each History page from your browser, or use FicWrapped's free bookmark to read them all at once and save them as a CSV spreadsheet or a searchable offline page, with a link to each fic.",
         "image": None,
         "body": """<h2>Why keep a copy</h2>
 <ul><li>AO3 only stores History while it's switched on, and <i>Clear History</i> can't be undone.</li><li>AO3 was offline for about two and a half weeks in late 2026; a copy on your own device doesn't depend on the site being up.</li><li>A spreadsheet lets you sort and filter your reading in ways AO3's pages don't.</li></ul>
 <h2>Free: save the pages yourself</h2>
 <p>Open your History (see <a href="/can-people-see-my-ao3-history/">where to find it</a>), then use your browser's File → Save Page As on each page, 25 works at a time. It needs no tools, but it's slow for a big History.</p>
-<h2>With FicWrapped</h2>
+<h2>Free with FicWrapped</h2>
 <ol>
 <li>Add the bookmark from <a href="/">the home page</a> and open AO3 while logged in.</li>
 <li>Click the bookmark, choose <b>All time</b> as the year, and tick <b>Also save my Marked for Later list</b>.</li>
 <li>Click <b>Read my History</b>. Big histories take a few minutes; AO3 is read about one page a second.</li>
-<li>Open your Wrapped. With the Supporter Pack, click <b>History CSV</b> or <b>Offline History page</b>.</li>
+<li>Open your Wrapped and click <b>History CSV</b> or <b>Offline History page</b>, under <i>Keep a copy of your History</i>.</li>
 </ol>
 <h2>What the export includes</h2>
 <p>For every work: last visited date, visit count, title, authors, fandoms, rating, categories, warnings, relationships, characters, additional tags, word count, chapters, complete or in progress, kudos, hits, language, whether it's marked for later or has an update, and the AO3 link. Deleted works are listed with their last-visited date only.</p>

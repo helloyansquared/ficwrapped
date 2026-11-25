@@ -43,8 +43,14 @@ const mime = f => ({ '.js': 'application/javascript', '.html': 'text/html', '.wo
   pop.on('pageerror', e => errs.push('site: ' + e.message));
   await pop.waitForFunction(() => document.getElementById('wrapped').classList.contains('on'), null, { timeout: 15000 });
   const res = await pop.evaluate(() => ({ title: document.getElementById('wTitle').textContent, works: STATS.works, ids: IDS.length, saved: !!localStorage.getItem('fw-data') }));
+  const [dl] = await Promise.all([pop.waitForEvent('download'), pop.click('#csv')]);
+  const csvText = fs.readFileSync(await dl.path(), 'utf8');
+  res.freeCsvRows = csvText.trim().split('\n').length - 1;
+  res.csvVisible = await pop.isVisible('#csv');
+  res.packHasPro = await pop.evaluate(() => document.getElementById('pack').classList.contains('pro'));
+  await pop.locator('#export').screenshot({ path: '/tmp/e2e-export.png' });
   await pop.screenshot({ path: '/tmp/e2e-wrapped.png' });
   console.log(JSON.stringify({ doneText, hits, res, errs }));
-  if (res.works !== 23 || errs.length) process.exit(1);
+  if (res.works !== 23 || errs.length || !res.csvVisible || res.packHasPro || res.freeCsvRows < 23) process.exit(1);
   await b.close();
 })();

@@ -60,7 +60,7 @@ app = {"@type": "WebApplication", "@id": U() + "#app", "name": "FicWrapped", "al
        "screenshot": [EX(n) for n in EXAMPLES],
        "featureList": ["Reads AO3 History with a bookmark, no password", "Paste mode for phones", "Top fandoms, ships, characters and tags",
                        "Most-reread fic, longest fic and reading by month", "Reader type", "Shareable 1080×1920 cards",
-                       "Printable poster, History CSV and offline History page (Supporter Pack)"],
+                       "Free History CSV and offline History page", "Printable poster (Supporter Pack)"],
        "offers": [{"@type": "Offer", "name": "AO3 Wrapped cards", "price": "0", "priceCurrency": "USD"},
                   {"@type": "Offer", "name": "FicWrapped Supporter Pack", "price": "3.99", "priceCurrency": "USD", "url": U()}]}
 home_ld = ld([{"@context": "https://schema.org", **ORG}, {"@context": "https://schema.org", **AUTHOR},

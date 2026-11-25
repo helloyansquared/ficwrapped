@@ -38,7 +38,7 @@ AO3 Wrapped is a fan-made, Spotify-Wrapped-style year in review of your reading 
 - [Can I get AO3 Wrapped without giving my password?](https://ficwrapped.pages.dev/ao3-wrapped-without-password/) (updated 2026-11-25): Yes. How password websites, Colab notebooks, browser extensions, bookmarklets and paste tools make an AO3 Wrapped, and which ones never see your AO3 login.
 - [Can I still get my AO3 Wrapped for 2025?](https://ficwrapped.pages.dev/ao3-wrapped-2025/) (updated 2026-11-25): You can make an AO3 Wrapped for 2025 or any earlier year, but it will be incomplete. Why AO3 History moves reread fics to the latest year, and how to do it.
 - [Can other people see my AO3 History?](https://ficwrapped.pages.dev/can-people-see-my-ao3-history/) (updated 2026-11-25): Only you can see your AO3 History, while logged in. Where to find it, what it records, and how to delete entries, clear it or switch it off.
-- [Can I export my AO3 History?](https://ficwrapped.pages.dev/ao3-history-export/) (updated 2026-11-25): AO3 has no export button for History or Marked for Later. How to save your AO3 History as a CSV spreadsheet or an offline page, free or with FicWrapped.
+- [Can I export my AO3 History?](https://ficwrapped.pages.dev/ao3-history-export/) (updated 2026-11-25): AO3 has no export button for History or Marked for Later. How to save your AO3 History as a CSV spreadsheet or an offline page for free.
 - [Is AO3 Wrapped safe to use?](https://ficwrapped.pages.dev/is-ao3-wrapped-safe/) (updated 2026-11-25): Is AO3 Wrapped safe? It depends on the method. What password sites, Colab notebooks, extensions, bookmarklets and paste tools can each see on your account.
 - [Privacy and refunds](https://ficwrapped.pages.dev/privacy/)
 

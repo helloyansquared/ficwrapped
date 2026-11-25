@@ -109,7 +109,7 @@ code{font:15px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:v
 .pack small{display:block;color:var(--soft);margin-top:10px;font-size:14px}
 .keyrow{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}.keyrow input{flex:1;min-width:200px;font:inherit;font-size:16px;padding:10px;border:2px solid var(--ink);border-radius:10px;min-height:48px}
 .ok{color:#127a4a;font-weight:700}.bad{color:#a1122a;font-weight:700}
-.pro-tools{display:none;gap:10px;flex-wrap:wrap;margin-top:12px}.pro .pro-tools{display:flex}.pro .buy{display:none}
+.export{margin-top:22px}.export h3{margin:0 0 6px}.export p{margin:0 0 12px}.pro-tools{display:none;gap:10px;flex-wrap:wrap;margin-top:12px}.pro .pro-tools{display:flex}.pro .buy{display:none}
 .alt-text{font-size:15px;color:var(--soft)}
 .alt-text summary{cursor:pointer;font-weight:600;color:var(--ink);min-height:44px;display:flex;align-items:center}
 
@@ -179,13 +179,17 @@ footer a{color:#fff}
       </div>
       <div class="thumbs" id="thumbs" aria-label="All cards"></div>
       <details class="alt-text"><summary>Read your Wrapped as text</summary><div id="altText"></div></details>
+      <div class="export" id="export">
+        <h3>Keep a copy of your History</h3>
+        <p>Free: save every work you loaded as a spreadsheet, or as one searchable page that works offline, with a link back to each fic on AO3.</p>
+        <div class="ctrls"><button class="btn plain" id="csv" type="button">History CSV</button><button class="btn plain" id="offline" type="button">Offline History page</button></div>
+      </div>
       <div class="pack" id="pack">
         <h3>FicWrapped Supporter Pack</h3>
         <p>The Wrapped is free. If it made you smile, the Supporter Pack adds:</p>
         <ul>
           <li>A print-ready poster of your year (A4 PDF and PNG, three colours)</li>
           <li>Every card without the web address</li>
-          <li>Your whole loaded AO3 History as a spreadsheet (CSV) and a searchable offline page, with links back to every fic</li>
         </ul>
         <div class="buy">
           <a class="btn violet" id="buy" href="#" target="_blank" rel="noopener">Get the Supporter Pack · $3.99</a>
@@ -198,8 +202,6 @@ footer a{color:#fff}
           <select id="theme" class="btn plain" style="box-shadow:none"><option value="violet">Violet poster</option><option value="ink">Ink poster</option><option value="paper">Paper poster</option></select>
           <button class="btn" id="posterPdf" type="button">Poster PDF</button>
           <button class="btn plain" id="posterPng" type="button">Poster PNG</button>
-          <button class="btn plain" id="csv" type="button">History CSV</button>
-          <button class="btn plain" id="offline" type="button">Offline History page</button>
         </div>
       </div>
     </div>
