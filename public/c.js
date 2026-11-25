@@ -29,7 +29,7 @@
   root.querySelector(".x").onclick = function () { stop = true; host.remove(); window.__ficwrapped = null; };
   window.__ficwrapped = { show: function () { host.style.display = ""; } };
 
-  var stop = false, items = [], user = null, year = new Date().getFullYear(), mode = "year", withMfl = false, done = false;
+  var stop = false, items = [], user = null, year = (new Date().getMonth() === 0 ? new Date().getFullYear() - 1 : new Date().getFullYear()), mode = "year", withMfl = false, done = false;
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function view(html) { box.innerHTML = html; }
   function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
@@ -38,7 +38,7 @@
     if (window.FW && window.FW.parseReadingsDoc) return Promise.resolve();
     return new Promise(function (res, rej) {
       var s = document.createElement("script");
-      s.src = SITE + "core.js?v=30784a83";
+      s.src = SITE + "core.js?v=2ada0178";
       s.onload = res; s.onerror = function () { rej(new Error("core")); };
       document.head.appendChild(s);
     });
@@ -56,7 +56,7 @@
     return;
   }
 
-  var thisYear = new Date().getFullYear();
+  var thisYear = year; // January defaults to last year
   view('<h2>Your AO3 Wrapped</h2><p>Hi, ' + esc(user) + '. FicWrapped will read your History pages here, one every second or so, then open your Wrapped in a new tab.</p>' +
     '<label>Year <select id="yr"><option value="' + thisYear + '">' + thisYear + '</option><option value="' + (thisYear - 1) + '">' + (thisYear - 1) + '</option><option value="all">All time (slower)</option></select></label>' +
     '<label><input type="checkbox" id="mfl"> Also save my Marked for Later list</label>' +

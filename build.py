@@ -25,8 +25,13 @@ FONT_FACES = ''.join(f'@font-face{{font-family:"{fam}";src:url(/fonts/{f}.woff2)
                         ("Bricolage Grotesque", "bricolage-grotesque-latin-800-normal", 800, "normal"), ("Literata", "literata-latin-400-normal", 400, "normal"),
                         ("Literata", "literata-latin-600-normal", 600, "normal"), ("Literata", "literata-latin-400-italic", "400 600", "italic")])
 PRELOAD = '<link rel="preload" href="/fonts/bricolage-grotesque-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>\n'
-ORG = {"@type": "Organization", "@id": U() + "#org", "name": "FicWrapped", "url": U(), "logo": U() + "og.png", "email": C.EMAIL,
+ORG = {"@type": "Organization", "@id": U() + "#org", "name": "FicWrapped", "url": U(), "logo": {"@type": "ImageObject", "url": U() + "logo.png", "width": 512, "height": 512}, "email": C.EMAIL,
        "sameAs": [C.GITHUB, "https://www.tumblr.com/yesyanyan", "https://x.com/yesyanyan"]}
+AUTHOR = {"@type": "Person", "@id": U() + "#author", "name": "yesyanyan", "url": "https://www.tumblr.com/yesyanyan",
+          "sameAs": ["https://www.tumblr.com/yesyanyan", "https://x.com/yesyanyan", "https://github.com/helloyansquared"]}
+EX = lambda n, w=540: f"{U()}img/examples/{n}-{w}.webp"
+EXAMPLES = ["ficwrapped-example-1-cover", "ficwrapped-example-2-fandoms", "ficwrapped-example-3-tags", "ficwrapped-example-4-reader-type", "ficwrapped-example-5-summary"]
+human = lambda iso: datetime.date.fromisoformat(iso).strftime('%-d %B %Y')
 
 def faq_html(keys):
     return '\n'.join(f'  <details{" open" if i == 0 else ""}><summary>{tx(C.QA[k][0])}</summary><p>{tx(C.QA[k][1])}</p></details>' for i, k in enumerate(keys))
@@ -45,22 +50,25 @@ s = s.replace('<style>\n', '<style>\n' + FONT_FACES, 1)
 head = (PRELOAD + f'<link rel="canonical" href="{site}">\n<link rel="icon" href="/favicon.svg" type="image/svg+xml">\n'
         f'<meta property="og:url" content="{site}">\n<meta property="og:image" content="{site}og.png">\n'
         '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">\n<meta name="twitter:card" content="summary_large_image">\n'
+        f'<link rel="preload" as="image" href="/img/examples/ficwrapped-example-4-reader-type-540.webp" type="image/webp" fetchpriority="high">\n'
         '<meta name="msvalidate.01" content="__MSVALIDATE__">')
 app = {"@type": "WebApplication", "@id": U() + "#app", "name": "FicWrapped", "alternateName": ["FicWrapped AO3 Wrapped", "AO3 Wrapped 2026"], "url": U(),
        "description": "Fan-made AO3 Wrapped: reads your Archive of Our Own History in your own browser and turns it into shareable year-in-review cards. No password, nothing uploaded.",
-       "applicationCategory": "EntertainmentApplication", "operatingSystem": "Any", "browserRequirements": "Requires JavaScript. Current Chrome, Edge, Firefox or Safari.",
+       "applicationCategory": "EntertainmentApplication", "operatingSystem": "Windows, macOS, Linux, ChromeOS, iOS, Android", "browserRequirements": "Requires JavaScript. Current Chrome, Edge, Firefox or Safari.",
        "image": U() + "og.png", "isAccessibleForFree": True, "inLanguage": "en", "datePublished": C.PUBLISHED, "dateModified": C.LAST_UPDATED,
-       "publisher": {"@id": U() + "#org"},
+       "publisher": {"@id": U() + "#org"}, "author": {"@id": U() + "#author"}, "isPartOf": {"@id": U() + "#site"},
+       "screenshot": [EX(n) for n in EXAMPLES],
        "featureList": ["Reads AO3 History with a bookmark, no password", "Paste mode for phones", "Top fandoms, ships, characters and tags",
                        "Most-reread fic, longest fic and reading by month", "Reader type", "Shareable 1080×1920 cards",
                        "Printable poster, History CSV and offline History page (Supporter Pack)"],
        "offers": [{"@type": "Offer", "name": "AO3 Wrapped cards", "price": "0", "priceCurrency": "USD"},
                   {"@type": "Offer", "name": "FicWrapped Supporter Pack", "price": "3.99", "priceCurrency": "USD", "url": U()}]}
-home_ld = ld([{"@context": "https://schema.org", **ORG},
+home_ld = ld([{"@context": "https://schema.org", **ORG}, {"@context": "https://schema.org", **AUTHOR},
               {"@context": "https://schema.org", "@type": "WebSite", "@id": U() + "#site", "name": "FicWrapped", "url": U(), "inLanguage": "en", "publisher": {"@id": U() + "#org"}},
               {"@context": "https://schema.org", **app}, faq_ld(C.HOME_FAQ)])
 for k, v in {'<!--SEO-HEAD-->': head, '<!--LDJSON-->': home_ld, '<!--HOME-FAQ-->': faq_html(C.HOME_FAQ), '<!--FACTS-->': C.facts_table(),
-             '<!--GUIDES-->': GUIDES, '<!--FOOTLINKS-->': FOOTLINKS, '<!--UPDATED-->': upd_human}.items():
+             '<!--GUIDES-->': GUIDES, '{HOME_TITLE}': tx(C.HOME_TITLE), '{HOME_DESC}': esc(C.HOME_DESC),
+             '{DEFINITION_REST}': tx(C.DEFINITION.split('AO3 Wrapped ', 1)[1]), '<!--FOOTLINKS-->': FOOTLINKS, '<!--UPDATED-->': upd_human}.items():
     assert k in s, k
     s = s.replace(k, v)
 
@@ -103,9 +111,14 @@ code{font:.85em ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:
 details{border-bottom:2px solid var(--ink);padding:4px 0}summary{cursor:pointer;font:700 18px "Bricolage Grotesque",system-ui,sans-serif;min-height:50px;display:flex;align-items:center}details p{margin:0 0 16px}
 .related{background:var(--paper);border:3px solid var(--ink);border-radius:14px;padding:16px 20px;margin-top:34px;font-family:"Bricolage Grotesque",system-ui,sans-serif}.related ul{margin:6px 0 0;padding-left:20px}
 footer{background:var(--ink);color:#d9d4ee;font:15px/1.6 "Bricolage Grotesque",system-ui,sans-serif;padding:28px 0}footer a{color:#fff}.foot{display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:12px}
-:focus-visible{outline:3px solid var(--coral);outline-offset:3px}"""
+:focus-visible{outline:3px solid var(--coral);outline-offset:3px}
+.tablewrap{overflow-x:auto;margin:14px 0;clear:both}.methods{min-width:720px;font-size:15px}.methods th,.methods td{min-width:120px}.methods caption{text-align:left;font:600 14px "Bricolage Grotesque",system-ui,sans-serif;color:var(--soft);padding:0 0 8px}.methods th[scope=col]{background:var(--lilac)}
+.shot{float:right;width:200px;margin:0 0 16px 22px}.shot img{width:100%;height:auto;border:3px solid var(--ink);border-radius:14px;box-shadow:5px 5px 0 var(--ink);display:block}.shot figcaption{font:13px "Bricolage Grotesque",system-ui,sans-serif;color:var(--soft);margin-top:8px}
+@media (max-width:640px){.shot{float:none;width:140px;margin:0 0 18px}}"""
 
-def shell(title, desc, canon, h1, crumb, body_html, ldnodes, robots=None):
+def shell(title, desc, canon, h1, crumb, body_html, ldnodes, robots=None, updated=None, ogimg=None):
+    upd = human(updated or C.LAST_UPDATED)
+    oi, ow, oh, oa = ogimg or (f"{site}og.png", 1200, 630, "FicWrapped: AO3 Wrapped 2026 example cards")
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -113,11 +126,11 @@ def shell(title, desc, canon, h1, crumb, body_html, ldnodes, robots=None):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{tx(title)}</title>
 <meta name="description" content="{esc(desc)}">
-{f'<meta name="robots" content="{robots}">' if robots else ''}
-<link rel="canonical" href="{canon}">
+{f'<meta name="robots" content="{robots}">' if robots else f'<link rel="canonical" href="{canon}">'}
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article"><meta property="og:site_name" content="FicWrapped"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}">
-<meta property="og:url" content="{canon}"><meta property="og:image" content="{site}og.png"><meta name="twitter:card" content="summary_large_image">
+<meta property="og:url" content="{canon}"><meta property="og:image" content="{oi}"><meta property="og:image:width" content="{ow}"><meta property="og:image:height" content="{oh}"><meta property="og:image:alt" content="{esc(oa)}">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{esc(title)}"><meta name="twitter:description" content="{esc(desc)}">
 <meta name="theme-color" content="#7b5cff">
 {PRELOAD}{ld(ldnodes) if ldnodes else ''}
 <style>{PAGE_CSS}</style>
@@ -131,7 +144,7 @@ def shell(title, desc, canon, h1, crumb, body_html, ldnodes, robots=None):
 <main class="wrap">
 {body_html}
 </main>
-<footer><div class="wrap">{FOOTLINKS}FicWrapped is an independent fan-made tool. It is not affiliated with, endorsed by or connected to the Organization for Transformative Works or the Archive of Our Own. Questions: <a href="mailto:{C.EMAIL}">{C.EMAIL}</a>. Last updated: {upd_human}.</div></footer>
+<footer><div class="wrap">{FOOTLINKS}FicWrapped is an independent fan-made tool. It is not affiliated with, endorsed by or connected to the Organization for Transformative Works or the Archive of Our Own. Questions: <a href="mailto:{C.EMAIL}">{C.EMAIL}</a>. Last updated: {upd}.</div></footer>
 </body>
 </html>
 """
@@ -144,17 +157,21 @@ def crumbs_ld(name, url):
 PAGES = {p['slug']: p for p in C.PAGES}
 for p in C.PAGES:
     url = U(p['slug'])
+    img = p.get('image')
+    fig = (f'<figure class="shot"><img loading="lazy" src="/img/examples/{img[0]}-270.webp" srcset="/img/examples/{img[0]}-540.webp 2x" width="270" height="480" alt="{esc(img[1])}"><figcaption>Example card, made from sample data</figcaption></figure>\n') if img else ''
     body = (f'<p class="answer">{tx(p["answer"])}</p>\n<a class="cta" href="/">Make my AO3 Wrapped</a>\n'
-            f'<p class="meta">Last updated: <time datetime="{C.LAST_UPDATED}">{upd_human}</time>. Free, no password, nothing uploaded.</p>\n'
-            + p['body'].replace('{FACTS}', '<h2>How the numbers are counted</h2>' + C.facts_table())
+            f'<p class="meta">Last updated: <time datetime="{p["updated"]}">{human(p["updated"])}</time>. Free, no password, nothing uploaded.</p>\n'
+            + fig + p['body'].replace('{FACTS}', '<h2>How the numbers are counted</h2>' + C.facts_table()).replace('{METHODS}', C.methods_table())
             + f'\n<h2>Questions</h2>\n{faq_html(p["faq"])}\n'
             + '<aside class="related"><b>Related guides</b><ul>' + ''.join(f'<li><a href="/{s2}/">{tx(PAGES[s2]["h1"])}</a></li>' for s2 in p['links'])
             + '<li><a href="/">FicWrapped: make your AO3 Wrapped</a></li></ul></aside>')
     article = {"@context": "https://schema.org", "@type": "Article", "headline": p['h1'], "description": p['description'], "url": url,
-               "inLanguage": "en", "datePublished": C.PUBLISHED, "dateModified": C.LAST_UPDATED, "image": U() + "og.png",
-               "author": {"@type": "Person", "name": "yesyanyan", "url": "https://www.tumblr.com/yesyanyan"}, "publisher": {"@context": "https://schema.org", **ORG}, "mainEntityOfPage": url}
+               "inLanguage": "en", "datePublished": C.PUBLISHED, "dateModified": p['updated'], "image": EX(img[0]) if img else U() + "og.png",
+               "author": AUTHOR, "publisher": {"@type": "Organization", "@id": U() + "#org", "name": "FicWrapped", "url": U()},
+               "isPartOf": {"@id": U() + "#site"}, "mainEntityOfPage": url}
     out = pub / p['slug']; out.mkdir(exist_ok=True)
-    (out / 'index.html').write_text(finish(shell(p['title'], p['description'], url, p['h1'], p['crumb'], body, [crumbs_ld(p['crumb'], url), article, faq_ld(p['faq'])])))
+    og = (EX(img[0]), 540, 960, img[1]) if img else None
+    (out / 'index.html').write_text(finish(shell(p['title'], p['description'], url, p['h1'], p['crumb'], body, [crumbs_ld(p['crumb'], url), article, faq_ld(p['faq'])], updated=p['updated'], ogimg=og)))
 
 priv = f"""<p class="answer">FicWrapped reads your AO3 History and makes your Wrapped inside your own browser. Your History is never uploaded to us, stored by us or seen by us. This page lists the few things that do leave your device.</p>
 <p class="meta">Last updated: <time datetime="{C.LAST_UPDATED}">{upd_human}</time></p>
@@ -190,19 +207,33 @@ Allow: /
 
 Sitemap: {site}sitemap.xml
 """)
-urls = [U()] + [U(p['slug']) for p in C.PAGES] + [U('privacy')]
-(pub / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-    + ''.join(f'  <url><loc>{u}</loc><lastmod>{C.LAST_UPDATED}</lastmod></url>\n' for u in urls) + '</urlset>\n')
+entries = [(U(), C.LAST_UPDATED, [EX(n) for n in EXAMPLES])] + [(U(p['slug']), p['updated'], [EX(p['image'][0])] if p.get('image') else []) for p in C.PAGES] + [(U('privacy'), C.LAST_UPDATED, [])]
+urls = [e[0] for e in entries]
+(pub / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n'
+    + ''.join(f'  <url><loc>{u}</loc><lastmod>{d}</lastmod>' + ''.join(f'<image:image><image:loc>{i}</image:loc></image:image>' for i in imgs) + '</url>\n' for u, d, imgs in entries) + '</urlset>\n')
 strip = lambda h: re.sub('<[^>]+>', '', h)
 facts_txt = '\n'.join(f'- {a}: {strip(b)}' for a, b in C.FACTS_ROWS)
+methods_txt = '\n'.join(f'- {m}: password or cookie needed: {pw}; runs: {w}; phone: {ph}; owner can see: {sv}' for m, pw, w, ph, sv in C.METHODS)
 (pub / 'llms.txt').write_text(f"""# FicWrapped
 
 > FicWrapped is a free, fan-made AO3 Wrapped: it reads a reader's Archive of Our Own (AO3) History in their own browser and turns it into shareable year-in-review cards (top fandoms, ships, characters, tags, most-reread fic, reading by month, reader type). It never asks for the AO3 password and uploads nothing. A bookmarklet works on desktop and mobile browsers; a paste mode works anywhere. An optional $3.99 Supporter Pack adds a printable poster and a CSV/offline export of the loaded History. AO3 has no official Wrapped. Not affiliated with the OTW or AO3.
 
-## How FicWrapped counts (checked {C.LAST_UPDATED})
+## Definition
+{C.DEFINITION}
+
+## Key facts (checked {C.CHECKED})
 {facts_txt}
+
+## Ways to make an AO3 Wrapped, compared (checked {C.CHECKED})
+{methods_txt}
+
+## What FicWrapped is not
+- Not an official AO3 or OTW product, and not affiliated with them.
+- Never asks for the AO3 password or session cookie.
+- Uploads nothing: History is read in the user's browser and passed between tabs with postMessage.
+- Does not show site-wide AO3 statistics such as the yearly top ships lists; it shows the user's own reading.
 
 ## Pages
 - [Tool: make your AO3 Wrapped]({U()})
-""" + ''.join(f"- [{p['h1']}]({U(p['slug'])}): {p['description']}\n" for p in C.PAGES) + f"- [Privacy and refunds]({U('privacy')})\n\nRelated: [FicToEpub, AO3 HTML to EPUB converter](https://fictoepub.pages.dev/)\nContact: {C.EMAIL}\n")
+""" + ''.join(f"- [{p['h1']}]({U(p['slug'])}) (updated {p['updated']}): {p['description']}\n" for p in C.PAGES) + f"- [Privacy and refunds]({U('privacy')})\n\nSource code: {C.GITHUB}\nRelated: [FicToEpub, AO3 HTML to EPUB converter](https://fictoepub.pages.dev/)\nContact: {C.EMAIL}\n")
 print('built for', site, 'product', product or '(none yet)', 'version', version, '·', len(urls), 'urls')
