@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Is AO3 Wrapped Safe? Passwords, Cookies &amp; Bookmarks Explained | FicWrapped</title>
+<meta name="description" content="AO3 Wrapped tools work in different ways: some ask for your password, some run notebooks, some run in your browser. What each method can see, and how to stay safe.">
+
+<link rel="canonical" href="https://ficwrapped.pages.dev/is-ao3-wrapped-safe/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article"><meta property="og:site_name" content="FicWrapped"><meta property="og:title" content="Is AO3 Wrapped Safe? Passwords, Cookies &amp; Bookmarks Explained | FicWrapped"><meta property="og:description" content="AO3 Wrapped tools work in different ways: some ask for your password, some run notebooks, some run in your browser. What each method can see, and how to stay safe.">
+<meta property="og:url" content="https://ficwrapped.pages.dev/is-ao3-wrapped-safe/"><meta property="og:image" content="https://ficwrapped.pages.dev/og.png"><meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#7b5cff">
+<link rel="preload" href="/fonts/bricolage-grotesque-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">
+[{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"FicWrapped","item":"https://ficwrapped.pages.dev/"},{"@type":"ListItem","position":2,"name":"Is AO3 Wrapped safe?","item":"https://ficwrapped.pages.dev/is-ao3-wrapped-safe/"}]},{"@context":"https://schema.org","@type":"Article","headline":"Is AO3 Wrapped safe to use?","description":"AO3 Wrapped tools work in different ways: some ask for your password, some run notebooks, some run in your browser. What each method can see, and how to stay safe.","url":"https://ficwrapped.pages.dev/is-ao3-wrapped-safe/","inLanguage":"en","datePublished":"2026-11-25","dateModified":"2026-11-25","image":"https://ficwrapped.pages.dev/og.png","author":{"@type":"Person","name":"yesyanyan","url":"https://www.tumblr.com/yesyanyan"},"publisher":{"@context":"https://schema.org","@type":"Organization","@id":"https://ficwrapped.pages.dev/#org","name":"FicWrapped","url":"https://ficwrapped.pages.dev/","logo":"https://ficwrapped.pages.dev/og.png","email":"hello@yansquared.com","sameAs":["https://github.com/helloyansquared/ficwrapped","https://www.tumblr.com/yesyanyan","https://x.com/yesyanyan"]},"mainEntityOfPage":"https://ficwrapped.pages.dev/is-ao3-wrapped-safe/"},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does FicWrapped need my AO3 password?","acceptedAnswer":{"@type":"Answer","text":"No. You log in to AO3 yourself, on AO3, as usual. The bookmark runs in that AO3 tab, reads only your History pages and passes the list to the FicWrapped tab you open. It never sees your password or cookies, and nothing is uploaded to a server."}},{"@type":"Question","name":"Is it safe to run a bookmark on AO3?","acceptedAnswer":{"@type":"Answer","text":"A bookmark runs code in the AO3 tab, so only use ones you can read. FicWrapped's script is short, published at ficwrapped.pages.dev/c.js and on GitHub, and it only fetches your own History pages. If you'd rather not run any code on AO3, use the paste option."}},{"@type":"Question","name":"Will AO3 block me for using it?","acceptedAnswer":{"@type":"Answer","text":"FicWrapped reads your History at about the pace of someone clicking Next, and it backs off when AO3 says to retry later. That's far gentler than downloading fics. If AO3 is down or under maintenance, wait and try again later."}},{"@type":"Question","name":"Is there an official AO3 Wrapped?","acceptedAnswer":{"@type":"Answer","text":"No. AO3 doesn't make a personal year-in-review. Every AO3 Wrapped is fan-made from your AO3 History. FicWrapped is one of them: it reads your History in your own browser and turns it into shareable cards, without asking for your password."}}]}]
+</script>
+<style>@font-face{font-family:"Bricolage Grotesque";src:url(/fonts/bricolage-grotesque-latin-400-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Bricolage Grotesque";src:url(/fonts/bricolage-grotesque-latin-600-normal.woff2) format("woff2");font-weight:500 700;font-style:normal;font-display:swap}
+@font-face{font-family:"Bricolage Grotesque";src:url(/fonts/bricolage-grotesque-latin-800-normal.woff2) format("woff2");font-weight:800;font-style:normal;font-display:swap}
+@font-face{font-family:"Literata";src:url(/fonts/literata-latin-400-normal.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Literata";src:url(/fonts/literata-latin-600-normal.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Literata";src:url(/fonts/literata-latin-400-italic.woff2) format("woff2");font-weight:400 600;font-style:italic;font-display:swap}
+:root{--ink:#1d1b36;--paper:#fffefa;--violet:#7b5cff;--sun:#ffd23f;--coral:#ff6b57;--mint:#3ddc97;--lilac:#e9e4ff;--soft:#55506e;--bg:#f2efff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.7 Literata,Georgia,serif}
+a{color:#4b2fd6;text-underline-offset:3px}h1,h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.1;text-wrap:balance}
+.wrap{max-width:760px;margin:0 auto;padding:0 max(4vw,18px)}
+.top{background:var(--violet);color:#fff;padding:18px 0 40px;border-bottom:3px solid var(--ink)}.top a{color:#fff}
+.brand{font:800 20px "Bricolage Grotesque",system-ui,sans-serif;text-decoration:none;display:inline-flex;gap:10px;align-items:center}
+.mark{display:grid;grid-template-columns:repeat(2,10px);gap:3px}.mark i{width:10px;height:10px;border:2px solid var(--ink)}
+.mark i:nth-child(1){background:var(--mint)}.mark i:nth-child(2){background:var(--sun)}.mark i:nth-child(3){background:var(--coral)}.mark i:nth-child(4){background:var(--paper)}
+.crumbs{font:15px "Bricolage Grotesque",system-ui,sans-serif;margin:22px 0 8px;color:#efeaff}
+.top h1{font-size:clamp(32px,5vw,50px);font-weight:800;margin:0}
+main{padding:30px 0 50px}
+.answer{font-size:20px;background:var(--paper);border:3px solid var(--ink);border-radius:14px;padding:18px 20px;box-shadow:6px 6px 0 var(--ink);margin:0 0 24px}
+.cta{display:inline-flex;align-items:center;min-height:50px;padding:0 22px;border:3px solid var(--ink);border-radius:12px;background:var(--sun);color:var(--ink);font:700 17px "Bricolage Grotesque",system-ui,sans-serif;text-decoration:none;box-shadow:5px 5px 0 var(--ink)}
+.meta{font:15px "Bricolage Grotesque",system-ui,sans-serif;color:var(--soft);margin:18px 0 28px}
+h2{font-size:clamp(24px,3.2vw,32px);font-weight:800;margin:38px 0 10px}li{margin:6px 0}
+code{font:.85em ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--lilac);padding:1px 6px;border-radius:6px;word-break:break-all}
+.facts{border-collapse:collapse;width:100%;margin:14px 0;background:var(--paper);border:3px solid var(--ink);font:16px/1.55 "Bricolage Grotesque",system-ui,sans-serif}
+.facts th,.facts td{padding:11px 14px;border-top:2px solid var(--lilac);text-align:left;vertical-align:top}.facts th{width:34%}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+details{border-bottom:2px solid var(--ink);padding:4px 0}summary{cursor:pointer;font:700 18px "Bricolage Grotesque",system-ui,sans-serif;min-height:50px;display:flex;align-items:center}details p{margin:0 0 16px}
+.related{background:var(--paper);border:3px solid var(--ink);border-radius:14px;padding:16px 20px;margin-top:34px;font-family:"Bricolage Grotesque",system-ui,sans-serif}.related ul{margin:6px 0 0;padding-left:20px}
+footer{background:var(--ink);color:#d9d4ee;font:15px/1.6 "Bricolage Grotesque",system-ui,sans-serif;padding:28px 0}footer a{color:#fff}.foot{display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:12px}
+:focus-visible{outline:3px solid var(--coral);outline-offset:3px}</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="/"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>FicWrapped</a>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">FicWrapped</a> › Is AO3 Wrapped safe?</nav>
+  <h1>Is AO3 Wrapped safe to use?</h1>
+</div></header>
+<main class="wrap">
+<p class="answer">It depends on how the tool gets your History. Tools that ask for your AO3 password or session cookie can do anything your account can until you change your password. Tools that run in your own logged-in browser, or that you paste History into, never get your login. FicWrapped works the second way, and its code is public.</p>
+<a class="cta" href="/">Make my AO3 Wrapped</a>
+<p class="meta">Last updated: <time datetime="2026-11-25">25 November 2026</time>. Free, no password, nothing uploaded.</p>
+<h2>The three ways AO3 Wrapped tools work</h2>
+<table class="facts"><caption class="sr">AO3 Wrapped methods compared</caption>
+<tr><th scope="row">You type your AO3 password into a website or notebook</th><td>The tool logs in as you. Whoever runs it could read or change anything on your account. If you've done this, change your AO3 password afterwards.</td></tr>
+<tr><th scope="row">You copy your session cookie into a script</th><td>Same access as your password until you log out of AO3 everywhere. Many Colab notebooks used this in past years; some stopped working when AO3's protection started blocking them.</td></tr>
+<tr><th scope="row">A bookmark or extension runs in your AO3 tab</th><td>The code runs in your own browser with your existing login, and the tool's owner never receives your password or cookie. You're trusting the code itself, so use one you can read.</td></tr>
+<tr><th scope="row">You paste or upload your History pages</th><td>The tool only sees what you paste. Nothing runs on AO3 at all.</td></tr>
+</table>
+<h2>What FicWrapped's bookmark does</h2>
+<ul>
+<li>Loads two small files from ficwrapped.pages.dev: <a href="/c.js">c.js</a> (the box you see) and <a href="/core.js">core.js</a> (reads the pages).</li>
+<li>Fetches only <code>/users/your-name/readings</code> pages, about one a second, plus Marked for Later if you tick it.</li>
+<li>Passes the list to the FicWrapped tab you open with <code>postMessage</code>. No server receives it.</li>
+<li>Doesn't read your password, cookies, messages, drafts or anything else on your account.</li>
+</ul>
+<p>The source is on <a href="https://github.com/helloyansquared/ficwrapped">GitHub</a>. If you'd rather not run any code on AO3, use <a href="/#load">paste mode</a>.</p>
+<h2>General tips</h2>
+<ul><li>Never give a third-party site your AO3 password.</li><li>If you already did, change your AO3 password; that also logs out other sessions.</li><li>Be wary of “AO3 Wrapped” links in comments or fics that ask you to log in on a page that isn't archiveofourown.org.</li></ul>
+<h2>Questions</h2>
+  <details open><summary>Does FicWrapped need my AO3 password?</summary><p>No. You log in to AO3 yourself, on AO3, as usual. The bookmark runs in that AO3 tab, reads only your History pages and passes the list to the FicWrapped tab you open. It never sees your password or cookies, and nothing is uploaded to a server.</p></details>
+  <details><summary>Is it safe to run a bookmark on AO3?</summary><p>A bookmark runs code in the AO3 tab, so only use ones you can read. FicWrapped's script is short, published at ficwrapped.pages.dev/c.js and on GitHub, and it only fetches your own History pages. If you'd rather not run any code on AO3, use the paste option.</p></details>
+  <details><summary>Will AO3 block me for using it?</summary><p>FicWrapped reads your History at about the pace of someone clicking Next, and it backs off when AO3 says to retry later. That's far gentler than downloading fics. If AO3 is down or under maintenance, wait and try again later.</p></details>
+  <details><summary>Is there an official AO3 Wrapped?</summary><p>No. AO3 doesn't make a personal year-in-review. Every AO3 Wrapped is fan-made from your AO3 History. FicWrapped is one of them: it reads your History in your own browser and turns it into shareable cards, without asking for your password.</p></details>
+<aside class="related"><b>Related guides</b><ul><li><a href="/how-to-do-ao3-wrapped/">How do I do AO3 Wrapped?</a></li><li><a href="/ao3-wrapped-on-phone/">How do I get AO3 Wrapped on my phone?</a></li><li><a href="/ao3-history-export/">Can I export my AO3 History?</a></li><li><a href="/">FicWrapped: make your AO3 Wrapped</a></li></ul></aside>
+</main>
+<footer><div class="wrap"><nav class="foot" aria-label="Guides"><a href="/">FicWrapped</a><a href="/how-to-do-ao3-wrapped/">How to do AO3 Wrapped</a><a href="/ao3-wrapped-on-phone/">AO3 Wrapped on your phone</a><a href="/ao3-history-export/">Export your AO3 History</a><a href="/is-ao3-wrapped-safe/">Is AO3 Wrapped safe?</a><a href="/privacy/">Privacy &amp; refunds</a><a href="https://fictoepub.pages.dev/">FicToEpub</a></nav>FicWrapped is an independent fan-made tool. It is not affiliated with, endorsed by or connected to the Organization for Transformative Works or the Archive of Our Own. Questions: <a href="mailto:hello@yansquared.com">hello@yansquared.com</a>. Last updated: 25 November 2026.</div></footer>
+</body>
+</html>

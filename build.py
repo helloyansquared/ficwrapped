@@ -1,0 +1,208 @@
+#!/usr/bin/env python3
+"""Build the public site.
+Usage: python3 build.py https://ficwrapped.pages.dev/ [pdt_PRODUCTID]
+- public/index.html from src/index.html (+ FAQ, facts table, JSON-LD from src/content.py)
+- public/c.js (the bookmark's collector) from src/c.js
+- one page per guide in src/content.py, plus /privacy/
+- robots.txt, sitemap.xml, llms.txt, 404.html
+Puts the Dodo product id into the page and functions/api/license.js when given."""
+import sys, re, json, pathlib, hashlib, html as H, datetime
+sys.path.insert(0, str(pathlib.Path(__file__).parent / 'src'))
+import content as C
+
+site = sys.argv[1].rstrip('/') + '/'
+product = sys.argv[2] if len(sys.argv) > 2 else None
+root = pathlib.Path(__file__).parent
+pub = root / 'public'
+esc = lambda s: H.escape(s, quote=True)
+tx = lambda s: H.escape(s, quote=False)
+U = lambda slug='': site + (slug + '/' if slug else '')
+upd_human = datetime.date.fromisoformat(C.LAST_UPDATED).strftime('%-d %B %Y')
+version = hashlib.sha1(b''.join((pub / f).read_bytes() for f in ['core.js', 'cards.js']) + (root / 'src/c.js').read_bytes()).hexdigest()[:8]
+
+FONT_FACES = ''.join(f'@font-face{{font-family:"{fam}";src:url(/fonts/{f}.woff2) format("woff2");font-weight:{w};font-style:{st};font-display:swap}}\n'
+  for fam, f, w, st in [("Bricolage Grotesque", "bricolage-grotesque-latin-400-normal", 400, "normal"), ("Bricolage Grotesque", "bricolage-grotesque-latin-600-normal", "500 700", "normal"),
+                        ("Bricolage Grotesque", "bricolage-grotesque-latin-800-normal", 800, "normal"), ("Literata", "literata-latin-400-normal", 400, "normal"),
+                        ("Literata", "literata-latin-600-normal", 600, "normal"), ("Literata", "literata-latin-400-italic", "400 600", "italic")])
+PRELOAD = '<link rel="preload" href="/fonts/bricolage-grotesque-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>\n'
+ORG = {"@type": "Organization", "@id": U() + "#org", "name": "FicWrapped", "url": U(), "logo": U() + "og.png", "email": C.EMAIL,
+       "sameAs": [C.GITHUB, "https://www.tumblr.com/yesyanyan", "https://x.com/yesyanyan"]}
+
+def faq_html(keys):
+    return '\n'.join(f'  <details{" open" if i == 0 else ""}><summary>{tx(C.QA[k][0])}</summary><p>{tx(C.QA[k][1])}</p></details>' for i, k in enumerate(keys))
+def faq_ld(keys):
+    return {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": C.QA[k][0], "acceptedAnswer": {"@type": "Answer", "text": C.QA[k][1]}} for k in keys]}
+def ld(nodes):
+    return '<script type="application/ld+json">\n' + json.dumps(nodes, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/') + '\n</script>'
+
+FOOTLINKS = '<nav class="foot" aria-label="Guides"><a href="/">FicWrapped</a>' + ''.join(f'<a href="/{p["slug"]}/">{esc(p["crumb"])}</a>' for p in C.PAGES) + '<a href="/privacy/">Privacy &amp; refunds</a><a href="https://fictoepub.pages.dev/">FicToEpub</a></nav>'
+GUIDES = '<ul>' + ''.join(f'<li><a href="/{p["slug"]}/">{tx(p["h1"])}</a></li>' for p in C.PAGES) + '</ul>'
+
+# ── Home ──────────────────────────────────────────────────────────────────────
+s = (root / 'src/index.html').read_text()
+s = s.replace('<style>\n', '<style>\n' + FONT_FACES, 1)
+head = (PRELOAD + f'<link rel="canonical" href="{site}">\n<link rel="icon" href="/favicon.svg" type="image/svg+xml">\n'
+        f'<meta property="og:url" content="{site}">\n<meta property="og:image" content="{site}og.png">\n'
+        '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">\n<meta name="twitter:card" content="summary_large_image">\n'
+        '<meta name="msvalidate.01" content="__MSVALIDATE__">')
+app = {"@type": "WebApplication", "@id": U() + "#app", "name": "FicWrapped", "alternateName": ["FicWrapped AO3 Wrapped", "AO3 Wrapped 2026"], "url": U(),
+       "description": "Fan-made AO3 Wrapped: reads your Archive of Our Own History in your own browser and turns it into shareable year-in-review cards. No password, nothing uploaded.",
+       "applicationCategory": "EntertainmentApplication", "operatingSystem": "Any", "browserRequirements": "Requires JavaScript. Current Chrome, Edge, Firefox or Safari.",
+       "image": U() + "og.png", "isAccessibleForFree": True, "inLanguage": "en", "datePublished": C.PUBLISHED, "dateModified": C.LAST_UPDATED,
+       "publisher": {"@id": U() + "#org"},
+       "featureList": ["Reads AO3 History with a bookmark, no password", "Paste mode for phones", "Top fandoms, ships, characters and tags",
+                       "Most-reread fic, longest fic and reading by month", "Reader type", "Shareable 1080×1920 cards",
+                       "Printable poster, History CSV and offline History page (Supporter Pack)"],
+       "offers": [{"@type": "Offer", "name": "AO3 Wrapped cards", "price": "0", "priceCurrency": "USD"},
+                  {"@type": "Offer", "name": "FicWrapped Supporter Pack", "price": "3.99", "priceCurrency": "USD", "url": U()}]}
+home_ld = ld([{"@context": "https://schema.org", **ORG},
+              {"@context": "https://schema.org", "@type": "WebSite", "@id": U() + "#site", "name": "FicWrapped", "url": U(), "inLanguage": "en", "publisher": {"@id": U() + "#org"}},
+              {"@context": "https://schema.org", **app}, faq_ld(C.HOME_FAQ)])
+for k, v in {'<!--SEO-HEAD-->': head, '<!--LDJSON-->': home_ld, '<!--HOME-FAQ-->': faq_html(C.HOME_FAQ), '<!--FACTS-->': C.facts_table(),
+             '<!--GUIDES-->': GUIDES, '<!--FOOTLINKS-->': FOOTLINKS, '<!--UPDATED-->': upd_human}.items():
+    assert k in s, k
+    s = s.replace(k, v)
+
+def finish(text):
+    text = text.replace('{GITHUB}', C.GITHUB).replace('{EMAIL}', C.EMAIL).replace('__SITE__', site).replace('__VERSION__', version)
+    text = text.replace('__MSVALIDATE__', MSVALIDATE)
+    if product:
+        text = text.replace('__PRODUCT_ID__', product)
+    return text
+MSVALIDATE = (root / 'src/msvalidate.txt').read_text().strip() if (root / 'src/msvalidate.txt').exists() else ''
+if not MSVALIDATE:
+    s = s.replace('\n<meta name="msvalidate.01" content="__MSVALIDATE__">', '')
+if product:
+    assert re.fullmatch(r'pdt_[A-Za-z0-9]+', product)
+    fn = root / 'functions/api/license.js'
+    fn.write_text(re.sub(r'const PRODUCT_ID = "[^"]*";', f'const PRODUCT_ID = "{product}";', fn.read_text()))
+(pub / 'index.html').write_text(finish(s))
+(pub / 'c.js').write_text(finish((root / 'src/c.js').read_text()))
+
+# ── Sub-pages ─────────────────────────────────────────────────────────────────
+PAGE_CSS = FONT_FACES + """:root{--ink:#1d1b36;--paper:#fffefa;--violet:#7b5cff;--sun:#ffd23f;--coral:#ff6b57;--mint:#3ddc97;--lilac:#e9e4ff;--soft:#55506e;--bg:#f2efff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.7 Literata,Georgia,serif}
+a{color:#4b2fd6;text-underline-offset:3px}h1,h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.1;text-wrap:balance}
+.wrap{max-width:760px;margin:0 auto;padding:0 max(4vw,18px)}
+.top{background:var(--violet);color:#fff;padding:18px 0 40px;border-bottom:3px solid var(--ink)}.top a{color:#fff}
+.brand{font:800 20px "Bricolage Grotesque",system-ui,sans-serif;text-decoration:none;display:inline-flex;gap:10px;align-items:center}
+.mark{display:grid;grid-template-columns:repeat(2,10px);gap:3px}.mark i{width:10px;height:10px;border:2px solid var(--ink)}
+.mark i:nth-child(1){background:var(--mint)}.mark i:nth-child(2){background:var(--sun)}.mark i:nth-child(3){background:var(--coral)}.mark i:nth-child(4){background:var(--paper)}
+.crumbs{font:15px "Bricolage Grotesque",system-ui,sans-serif;margin:22px 0 8px;color:#efeaff}
+.top h1{font-size:clamp(32px,5vw,50px);font-weight:800;margin:0}
+main{padding:30px 0 50px}
+.answer{font-size:20px;background:var(--paper);border:3px solid var(--ink);border-radius:14px;padding:18px 20px;box-shadow:6px 6px 0 var(--ink);margin:0 0 24px}
+.cta{display:inline-flex;align-items:center;min-height:50px;padding:0 22px;border:3px solid var(--ink);border-radius:12px;background:var(--sun);color:var(--ink);font:700 17px "Bricolage Grotesque",system-ui,sans-serif;text-decoration:none;box-shadow:5px 5px 0 var(--ink)}
+.meta{font:15px "Bricolage Grotesque",system-ui,sans-serif;color:var(--soft);margin:18px 0 28px}
+h2{font-size:clamp(24px,3.2vw,32px);font-weight:800;margin:38px 0 10px}li{margin:6px 0}
+code{font:.85em ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--lilac);padding:1px 6px;border-radius:6px;word-break:break-all}
+.facts{border-collapse:collapse;width:100%;margin:14px 0;background:var(--paper);border:3px solid var(--ink);font:16px/1.55 "Bricolage Grotesque",system-ui,sans-serif}
+.facts th,.facts td{padding:11px 14px;border-top:2px solid var(--lilac);text-align:left;vertical-align:top}.facts th{width:34%}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+details{border-bottom:2px solid var(--ink);padding:4px 0}summary{cursor:pointer;font:700 18px "Bricolage Grotesque",system-ui,sans-serif;min-height:50px;display:flex;align-items:center}details p{margin:0 0 16px}
+.related{background:var(--paper);border:3px solid var(--ink);border-radius:14px;padding:16px 20px;margin-top:34px;font-family:"Bricolage Grotesque",system-ui,sans-serif}.related ul{margin:6px 0 0;padding-left:20px}
+footer{background:var(--ink);color:#d9d4ee;font:15px/1.6 "Bricolage Grotesque",system-ui,sans-serif;padding:28px 0}footer a{color:#fff}.foot{display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:12px}
+:focus-visible{outline:3px solid var(--coral);outline-offset:3px}"""
+
+def shell(title, desc, canon, h1, crumb, body_html, ldnodes, robots=None):
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{tx(title)}</title>
+<meta name="description" content="{esc(desc)}">
+{f'<meta name="robots" content="{robots}">' if robots else ''}
+<link rel="canonical" href="{canon}">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article"><meta property="og:site_name" content="FicWrapped"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}">
+<meta property="og:url" content="{canon}"><meta property="og:image" content="{site}og.png"><meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#7b5cff">
+{PRELOAD}{ld(ldnodes) if ldnodes else ''}
+<style>{PAGE_CSS}</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="/"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>FicWrapped</a>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">FicWrapped</a> › {tx(crumb)}</nav>
+  <h1>{tx(h1)}</h1>
+</div></header>
+<main class="wrap">
+{body_html}
+</main>
+<footer><div class="wrap">{FOOTLINKS}FicWrapped is an independent fan-made tool. It is not affiliated with, endorsed by or connected to the Organization for Transformative Works or the Archive of Our Own. Questions: <a href="mailto:{C.EMAIL}">{C.EMAIL}</a>. Last updated: {upd_human}.</div></footer>
+</body>
+</html>
+"""
+
+def crumbs_ld(name, url):
+    return {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "FicWrapped", "item": U()},
+        {"@type": "ListItem", "position": 2, "name": name, "item": url}]}
+
+PAGES = {p['slug']: p for p in C.PAGES}
+for p in C.PAGES:
+    url = U(p['slug'])
+    body = (f'<p class="answer">{tx(p["answer"])}</p>\n<a class="cta" href="/">Make my AO3 Wrapped</a>\n'
+            f'<p class="meta">Last updated: <time datetime="{C.LAST_UPDATED}">{upd_human}</time>. Free, no password, nothing uploaded.</p>\n'
+            + p['body'].replace('{FACTS}', '<h2>How the numbers are counted</h2>' + C.facts_table())
+            + f'\n<h2>Questions</h2>\n{faq_html(p["faq"])}\n'
+            + '<aside class="related"><b>Related guides</b><ul>' + ''.join(f'<li><a href="/{s2}/">{tx(PAGES[s2]["h1"])}</a></li>' for s2 in p['links'])
+            + '<li><a href="/">FicWrapped: make your AO3 Wrapped</a></li></ul></aside>')
+    article = {"@context": "https://schema.org", "@type": "Article", "headline": p['h1'], "description": p['description'], "url": url,
+               "inLanguage": "en", "datePublished": C.PUBLISHED, "dateModified": C.LAST_UPDATED, "image": U() + "og.png",
+               "author": {"@type": "Person", "name": "yesyanyan", "url": "https://www.tumblr.com/yesyanyan"}, "publisher": {"@context": "https://schema.org", **ORG}, "mainEntityOfPage": url}
+    out = pub / p['slug']; out.mkdir(exist_ok=True)
+    (out / 'index.html').write_text(finish(shell(p['title'], p['description'], url, p['h1'], p['crumb'], body, [crumbs_ld(p['crumb'], url), article, faq_ld(p['faq'])])))
+
+priv = f"""<p class="answer">FicWrapped reads your AO3 History and makes your Wrapped inside your own browser. Your History is never uploaded to us, stored by us or seen by us. This page lists the few things that do leave your device.</p>
+<p class="meta">Last updated: <time datetime="{C.LAST_UPDATED}">{upd_human}</time></p>
+<h2>Your AO3 History</h2><p>The bookmark runs in your AO3 tab, fetches your own History pages from AO3, and passes the list straight to the FicWrapped tab with the browser's postMessage. Pasted or dropped pages are read by JavaScript on this page. Your latest Wrapped data is kept in your browser's local storage so it's still there after a reload; clear it by clearing this site's data in your browser.</p>
+<h2>Your AO3 login</h2><p>FicWrapped never asks for your AO3 password and the bookmark doesn't read your cookies. You stay logged in to AO3 the normal way.</p>
+<h2>License keys</h2><p>When you activate the Supporter Pack, your license key is sent to a small checking service (a Cloudflare Pages Function) that asks Dodo Payments whether the key is valid for FicWrapped. The key and an activation ID are saved in your browser's local storage. The checking service doesn't keep the key and never receives your History.</p>
+<h2>Payments</h2><p>Payments are processed by Dodo Payments, the merchant of record, which handles your card details, sales tax and receipts under its own privacy policy. We never see your card number.</p>
+<h2>Hosting and logs</h2><p>The site is hosted on Cloudflare Pages. Like any web host, Cloudflare processes standard request data such as IP addresses to deliver and protect the site. FicWrapped uses no cookies, analytics or ads.</p>
+<h2>Refunds</h2><p>If the Supporter Pack doesn't work for you, email <a href="mailto:{C.EMAIL}">{C.EMAIL}</a> within 14 days of buying and you'll get a refund.</p>
+<h2>Contact</h2><p>FicWrapped is an independent tool by YanSquared. Email <a href="mailto:{C.EMAIL}">{C.EMAIL}</a>.</p>"""
+(pub / 'privacy').mkdir(exist_ok=True)
+(pub / 'privacy/index.html').write_text(finish(shell('Privacy & Refunds | FicWrapped', 'How FicWrapped handles your AO3 History (it stays in your browser), license keys, payments and refunds.',
+                                              U('privacy'), 'Privacy & refunds', 'Privacy & refunds', priv, [crumbs_ld('Privacy & refunds', U('privacy'))])))
+(pub / '404.html').write_text(finish(shell('Page not found | FicWrapped', 'This page does not exist.', U(), 'This page wandered off', 'Not found',
+    '<p class="answer">There\'s nothing at this address. Your AO3 Wrapped is on the home page.</p><a class="cta" href="/">Make my AO3 Wrapped</a>', None, robots='noindex')))
+
+# ── robots, sitemap, llms.txt ─────────────────────────────────────────────────
+(pub / 'robots.txt').write_text(f"""User-agent: *
+Allow: /
+
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+Allow: /
+
+Sitemap: {site}sitemap.xml
+""")
+urls = [U()] + [U(p['slug']) for p in C.PAGES] + [U('privacy')]
+(pub / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    + ''.join(f'  <url><loc>{u}</loc><lastmod>{C.LAST_UPDATED}</lastmod></url>\n' for u in urls) + '</urlset>\n')
+strip = lambda h: re.sub('<[^>]+>', '', h)
+facts_txt = '\n'.join(f'- {a}: {strip(b)}' for a, b in C.FACTS_ROWS)
+(pub / 'llms.txt').write_text(f"""# FicWrapped
+
+> FicWrapped is a free, fan-made AO3 Wrapped: it reads a reader's Archive of Our Own (AO3) History in their own browser and turns it into shareable year-in-review cards (top fandoms, ships, characters, tags, most-reread fic, reading by month, reader type). It never asks for the AO3 password and uploads nothing. A bookmarklet works on desktop and mobile browsers; a paste mode works anywhere. An optional $3.99 Supporter Pack adds a printable poster and a CSV/offline export of the loaded History. AO3 has no official Wrapped. Not affiliated with the OTW or AO3.
+
+## How FicWrapped counts (checked {C.LAST_UPDATED})
+{facts_txt}
+
+## Pages
+- [Tool: make your AO3 Wrapped]({U()})
+""" + ''.join(f"- [{p['h1']}]({U(p['slug'])}): {p['description']}\n" for p in C.PAGES) + f"- [Privacy and refunds]({U('privacy')})\n\nRelated: [FicToEpub, AO3 HTML to EPUB converter](https://fictoepub.pages.dev/)\nContact: {C.EMAIL}\n")
+print('built for', site, 'product', product or '(none yet)', 'version', version, '·', len(urls), 'urls')
