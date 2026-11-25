@@ -43,5 +43,5 @@ AO3 Wrapped is a fan-made, Spotify-Wrapped-style year in review of your reading 
 - [Privacy and refunds](https://ficwrapped.pages.dev/privacy/)
 
 Source code: https://github.com/helloyansquared/ficwrapped
-Related: [FicToEpub, AO3 HTML to EPUB converter](https://fictoepub.pages.dev/)
+Related: [FicToEpub, AO3 HTML to EPUB converter](https://fictoepub.pages.dev/) · [BotToBook, Character.AI chats to PDF and EPUB](https://bottobook.pages.dev/)
 Contact: hello@yansquared.com

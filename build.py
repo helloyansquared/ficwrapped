@@ -41,7 +41,7 @@ def faq_ld(keys):
 def ld(nodes):
     return '<script type="application/ld+json">\n' + json.dumps(nodes, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/') + '\n</script>'
 
-FOOTLINKS = '<nav class="foot" aria-label="Guides"><a href="/">FicWrapped</a>' + ''.join(f'<a href="/{p["slug"]}/">{esc(p["crumb"])}</a>' for p in C.PAGES) + '<a href="/privacy/">Privacy &amp; refunds</a><a href="https://fictoepub.pages.dev/">FicToEpub</a></nav>'
+FOOTLINKS = '<nav class="foot" aria-label="Guides"><a href="/">FicWrapped</a>' + ''.join(f'<a href="/{p["slug"]}/">{esc(p["crumb"])}</a>' for p in C.PAGES) + '<a href="/privacy/">Privacy &amp; refunds</a><a href="https://fictoepub.pages.dev/">FicToEpub</a><a href="https://bottobook.pages.dev/">BotToBook</a></nav>'
 GUIDES = '<ul>' + ''.join(f'<li><a href="/{p["slug"]}/">{tx(p["h1"])}</a></li>' for p in C.PAGES) + '</ul>'
 
 # ── Home ──────────────────────────────────────────────────────────────────────
@@ -235,5 +235,5 @@ methods_txt = '\n'.join(f'- {m}: password or cookie needed: {pw}; runs: {w}; pho
 
 ## Pages
 - [Tool: make your AO3 Wrapped]({U()})
-""" + ''.join(f"- [{p['h1']}]({U(p['slug'])}) (updated {p['updated']}): {p['description']}\n" for p in C.PAGES) + f"- [Privacy and refunds]({U('privacy')})\n\nSource code: {C.GITHUB}\nRelated: [FicToEpub, AO3 HTML to EPUB converter](https://fictoepub.pages.dev/)\nContact: {C.EMAIL}\n")
+""" + ''.join(f"- [{p['h1']}]({U(p['slug'])}) (updated {p['updated']}): {p['description']}\n" for p in C.PAGES) + f"- [Privacy and refunds]({U('privacy')})\n\nSource code: {C.GITHUB}\nRelated: [FicToEpub, AO3 HTML to EPUB converter](https://fictoepub.pages.dev/) · [BotToBook, Character.AI chats to PDF and EPUB](https://bottobook.pages.dev/)\nContact: {C.EMAIL}\n")
 print('built for', site, 'product', product or '(none yet)', 'version', version, '·', len(urls), 'urls')
