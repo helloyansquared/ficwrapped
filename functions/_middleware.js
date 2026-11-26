@@ -2,7 +2,7 @@
 // Preview deployments (<hash>.ficwrapped.pages.dev) are left alone, and so are the
 // search-engine verification files, so the old property stays verified for Change of Address.
 const NEW_ORIGIN = "https://ficwrapped.yansquared.com";
-const KEEP = new Set(["/google55a4e1cc27afffdf.html", "/11392858012e47838d37df55a5852e11.txt", "/BingSiteAuth.xml"]);
+const KEEP = new Set(["/google55a4e1cc27afffdf.html", "/google55a4e1cc27afffdf", "/11392858012e47838d37df55a5852e11.txt", "/BingSiteAuth.xml"]);
 
 export async function onRequest({ request, next }) {
   const url = new URL(request.url);
