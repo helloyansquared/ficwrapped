@@ -28,6 +28,10 @@ AO3 Wrapped is a fan-made year in review of your reading on Archive of Our Own (
 | Bookmarklet (FicWrapped) | No | Your own AO3 tab | Yes | Nothing |
 | Paste History pages (FicWrapped) | No | The FicWrapped page | Yes | Only what you paste |
 
+## Userscript
+
+Prefer a userscript manager? The same collector, with core.js inlined and nothing loaded from elsewhere, is on Greasy Fork: https://greasyfork.org/en/scripts/607372-ao3-wrapped-by-ficwrapped-no-password (built to `public/ficwrapped.user.js`). It adds "Make my AO3 Wrapped" to your AO3 user menu and History page.
+
 ## How it works
 
 1. The bookmarklet loads [`c.js`](src/c.js) on archiveofourown.org.
