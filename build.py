@@ -41,7 +41,7 @@ def faq_ld(keys):
 def ld(nodes):
     return '<script type="application/ld+json">\n' + json.dumps(nodes, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/') + '\n</script>'
 
-FOOTLINKS = '<nav class="foot" aria-label="Guides"><a href="/">FicWrapped</a>' + ''.join(f'<a href="/{p["slug"]}/">{esc(p["crumb"])}</a>' for p in C.PAGES) + '<a href="/privacy/">Privacy &amp; refunds</a><a href="https://fictoepub.pages.dev/">FicToEpub</a><a href="https://bottobook.yansquared.com/">BotToBook</a></nav>'
+FOOTLINKS = '<nav class="foot" aria-label="Guides"><a href="/">FicWrapped</a>' + ''.join(f'<a href="/{p["slug"]}/">{esc(p["crumb"])}</a>' for p in C.PAGES) + '<a href="/privacy/">Privacy &amp; refunds</a><a href="https://fictoepub.yansquared.com/">FicToEpub</a><a href="https://bottobook.yansquared.com/">BotToBook</a></nav>'
 GUIDES = '<ul>' + ''.join(f'<li><a href="/{p["slug"]}/">{tx(p["h1"])}</a></li>' for p in C.PAGES) + '</ul>'
 
 # ── Home ──────────────────────────────────────────────────────────────────────
@@ -217,7 +217,7 @@ for p in C.PAGES:
     fig = (f'<figure class="shot"><img loading="lazy" src="/img/examples/{img[0]}-270.webp" srcset="/img/examples/{img[0]}-540.webp 2x" width="270" height="480" alt="{esc(img[1])}"><figcaption>Example card, made from sample data</figcaption></figure>\n') if img else ''
     body = (f'<p class="answer">{tx(p["answer"])}</p>\n<a class="cta" href="/">Make my AO3 Wrapped</a>\n'
             f'<p class="meta">Last updated: <time datetime="{p["updated"]}">{human(p["updated"])}</time>. Free, no password, nothing uploaded.</p>\n'
-            + fig + p['body'].replace('{FACTS}', '<h2>How the numbers are counted</h2>' + C.facts_table()).replace('{METHODS}', C.methods_table())
+            + fig + p['body'].replace('{FACTS}', '<h2>How the numbers are counted</h2>' + C.facts_table()).replace('{METHODS}', C.methods_table()).replace('{TOOLS}', C.tools_table())
             + f'\n<h2>Questions</h2>\n{faq_html(p["faq"])}\n'
             + '<aside class="related"><b>Related guides</b><ul>' + ''.join(f'<li><a href="/{s2}/">{tx(PAGES[s2]["h1"])}</a></li>' for s2 in p['links'])
             + '<li><a href="/">FicWrapped: make your AO3 Wrapped</a></li></ul></aside>')
@@ -283,6 +283,9 @@ methods_txt = '\n'.join(f'- {m}: password or cookie needed: {pw}; runs: {w}; pho
 ## Ways to make an AO3 Wrapped, compared (checked {C.CHECKED})
 {methods_txt}
 
+## AO3 Wrapped tools, named (checked {C.TOOLS_CHECKED}, from each tool's own page; not tested or audited)
+""" + ''.join(f"- {n} ({u}): {h}. Runs: {w}. Phone: {ph}. Price: {pr}. Source: {s}.\n" for n, u, h, w, ph, pr, s in C.TOOLS) + f"""FicWrapped is the maker's own tool.
+
 ## Questions and answers
 """ + ''.join(f"### {q}\n{a}\n\n" for q, a in C.QA.values()) + f"""## What FicWrapped is not
 - Not an official AO3 or OTW product, and not affiliated with them.
@@ -292,5 +295,5 @@ methods_txt = '\n'.join(f'- {m}: password or cookie needed: {pw}; runs: {w}; pho
 
 ## Pages
 - [Tool: make your AO3 Wrapped]({U()})
-""" + ''.join(f"- [{p['h1']}]({U(p['slug'])}) (updated {p['updated']}): {p['description']}\n" for p in C.PAGES) + f"- [Privacy and refunds]({U('privacy')})\n\nSource code: {C.GITHUB}\nRelated: [FicToEpub, AO3 HTML to EPUB converter](https://fictoepub.pages.dev/) · [BotToBook, Character.AI chats to PDF and EPUB](https://bottobook.yansquared.com/)\nContact: {C.EMAIL}\n")
+""" + ''.join(f"- [{p['h1']}]({U(p['slug'])}) (updated {p['updated']}): {p['description']}\n" for p in C.PAGES) + f"- [Privacy and refunds]({U('privacy')})\n\nSource code: {C.GITHUB}\nRelated: [FicToEpub, AO3 HTML to EPUB converter](https://fictoepub.yansquared.com/) · [BotToBook, Character.AI chats to PDF and EPUB](https://bottobook.yansquared.com/)\nContact: {C.EMAIL}\n")
 print('built for', site, 'product', product or '(none yet)', 'version', version, '·', len(urls), 'urls')

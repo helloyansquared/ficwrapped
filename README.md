@@ -72,4 +72,4 @@ NODE_PATH=$(npm root -g) node test/e2e.js                       # bookmarklet ag
 
 Copy, FAQ and guide pages live in `src/content.py`. Cloudflare Pages: no build command, output directory `public`. MIT license.
 
-By [yesyanyan](https://www.tumblr.com/yesyanyan) (YanSquared), who also makes [FicToEpub](https://fictoepub.pages.dev/), the free AO3 HTML to EPUB converter. Not affiliated with the Organization for Transformative Works or the Archive of Our Own. Contact: hello@yansquared.com
+By [yesyanyan](https://www.tumblr.com/yesyanyan) (YanSquared), who also makes [FicToEpub](https://fictoepub.yansquared.com/), the free AO3 HTML to EPUB converter. Not affiliated with the Organization for Transformative Works or the Archive of Our Own. Contact: hello@yansquared.com

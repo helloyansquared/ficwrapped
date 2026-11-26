@@ -20,10 +20,22 @@ AO3 Wrapped is a fan-made, Spotify-Wrapped-style year in review of your reading 
 
 ## Ways to make an AO3 Wrapped, compared (checked 25 November 2026)
 - Website that logs in for you: password or cookie needed: Yes, your AO3 password; runs: Their server; phone: Yes; owner can see: Everything your account can see, until you change your password
-- Colab notebook: password or cookie needed: Usually your username and password, or a session cookie; runs: Google's servers; phone: Awkward; owner can see: Depends on the code; the notebook runs with your login
+- Colab notebook or script: password or cookie needed: Usually your AO3 username and password; runs: Google's servers; phone: Awkward; owner can see: Depends on the code; the notebook runs with your login
 - Browser extension: password or cookie needed: No; runs: Your browser; phone: Only where the browser supports extensions (e.g. Firefox for Android); owner can see: Whatever its permissions allow
 - Bookmarklet (FicWrapped): password or cookie needed: No; runs: Your own AO3 tab; phone: Yes, Safari and Chrome; owner can see: Nothing: the list goes from your AO3 tab to the FicWrapped tab
 - Paste History pages (FicWrapped): password or cookie needed: No; runs: The FicWrapped page; phone: Yes; owner can see: Only what you paste
+
+## AO3 Wrapped tools, named (checked 26 November 2026, from each tool's own page; not tested or audited)
+- BotHermione Wrapped (https://www.bothermione.com/wrapped): Asks for your AO3 password and logs in for you; says it stores none of your details. Runs: Their server (the page says a Flask container on Heroku). Phone: Not stated. Price: Not stated. Source: Its own page; the text refers to 2023.
+- ao3wrapped (teresachenec) (https://github.com/teresachenec/ao3wrapped): You type your AO3 username and password into the Python script. Runs: Your own computer (Python). Phone: Not stated. Price: Free (public code). Source: GitHub README.
+- ao3-wrapped (twitchy-ears) (https://github.com/twitchy-ears/ao3-wrapped): Asks for your AO3 username and password, then scans History. Runs: Your own computer (Python script, Windows or Linux app). Phone: Not stated. Price: Free (public code, GPL-3.0). Source: GitHub README.
+- Colab notebook (nyxbda) (https://any-other-fandom-blog.tumblr.com/post/738316878158692352/for-those-who-are-not-as-familiar-with-python-and): AO3 username and password by default; the author also describes an extension route. Runs: Google Colab, or your own computer. Phone: Not stated. Price: Not stated. Source: Author's Tumblr post.
+- AO3-Wrapped notebook (anulomufa) (https://github.com/anulomufa/AO3-Wrapped): You run a Login cell to sign in to AO3; the method isn't described. Runs: Google Colab or Jupyter. Phone: Not stated. Price: Free (public code). Source: GitHub README.
+- AO3 Wrapped (ao3wrapped.vercel.app) (https://ao3wrapped.vercel.app/): Chrome extension; the site says no AO3 username or password is needed. Runs: Your browser, according to the site. Phone: Not stated. Price: Not stated. Source: Its own home page (no install link found).
+- AO3-wrapped Firefox add-on (Ariadne) (https://addons.mozilla.org/en-US/firefox/addon/ao3-wrapped/): Firefox extension with access to archiveofourown.org; marked beta. Runs: Your browser. Phone: Listed for Firefox for Android. Price: Not stated. Source: Mozilla add-ons listing.
+- AO3+ Firefox add-on (Gita) (https://addons.mozilla.org/en-US/firefox/addon/ao3-plus/): Firefox extension; includes a yearly stats page called AO3 Wrapped. Runs: Your browser. Phone: Listed for Firefox for Android. Price: Not stated. Source: Mozilla add-ons listing.
+- FicWrapped (this site) (https://ficwrapped.yansquared.com/): Bookmark on your logged-in AO3 tab, or paste History pages; never asks for a password. Runs: Your own browser. Phone: Yes: Safari or Chrome bookmark, or paste. Price: Free; optional $3.99 Supporter Pack. Source: This site.
+FicWrapped is the maker's own tool.
 
 ## Questions and answers
 ### Is there an official AO3 Wrapped?
@@ -35,8 +47,14 @@ Drag the AO3 Wrapped bookmark from ficwrapped.yansquared.com to your bookmarks b
 ### Does FicWrapped need my AO3 password?
 No. You log in to AO3 yourself, on AO3, as usual. The bookmark runs in that AO3 tab, reads only your History pages and passes the list to the FicWrapped tab you open. It never sees your password or cookies, and nothing is uploaded to a server.
 
+### What AO3 Wrapped tools are there?
+None are official; all are fan-made. On 26 November 2026 we found a website that logs in for you (BotHermione Wrapped), Python scripts you run yourself (teresachenec's ao3wrapped and twitchy-ears' ao3-wrapped), Colab notebooks (nyxbda's and anulomufa's), browser extensions (ao3wrapped.vercel.app for Chrome, and the AO3-wrapped and AO3+ add-ons for Firefox) and FicWrapped, which uses a bookmark or pasted History pages. The table on our AO3 Wrapped without a password page lists what each one says about passwords, where it runs and phones.
+
+### Which AO3 Wrapped tools ask for my AO3 password?
+Going by their own pages on 26 November 2026: BotHermione Wrapped, teresachenec's ao3wrapped, twitchy-ears' ao3-wrapped and the default mode of nyxbda's Colab notebook ask for your AO3 username and password. The ao3wrapped.vercel.app Chrome extension says it needs neither, and FicWrapped never asks for a password. The two Firefox add-on listings don't say either way, and anulomufa's notebook has a login step whose method isn't described. We haven't tested or audited these tools.
+
 ### Is there an AO3 Wrapped that doesn't need my password?
-Yes. Tools that run in your own logged-in browser, like bookmarklets and some extensions, or that read History pages you paste, never receive your AO3 password. FicWrapped works both ways. Websites and most Colab notebooks that log in for you do need it.
+Yes. Tools that run in your own logged-in browser, like bookmarklets and some extensions, or that read History pages you paste, never receive your AO3 password. FicWrapped works both ways. Websites, scripts and most Colab notebooks that log in for you do need it.
 
 ### Can I make my AO3 Wrapped on my phone?
 Yes. On iPhone Safari and Android Chrome you can save the bookmark code as a bookmark and tap it on AO3; the steps are on the home page. If that's fiddly, copy your History pages one at a time and paste them into FicWrapped instead.
@@ -93,7 +111,7 @@ No. AO3 says works you visited while History was on are still saved after you sw
 - [Tool: make your AO3 Wrapped](https://ficwrapped.yansquared.com/)
 - [How do I do AO3 Wrapped?](https://ficwrapped.yansquared.com/how-to-do-ao3-wrapped/) (updated 2026-11-25): AO3 Wrapped tutorial for 2026: add a bookmark, click it on AO3, save your cards. About a minute, free, and nobody gets your AO3 password.
 - [How do I get AO3 Wrapped on my phone?](https://ficwrapped.yansquared.com/ao3-wrapped-on-phone/) (updated 2026-11-25): Make your AO3 Wrapped on an iPhone, iPad or Android phone: save the FicWrapped bookmark in Safari or Chrome, or paste your History pages. No password, no app.
-- [Can I get AO3 Wrapped without giving my password?](https://ficwrapped.yansquared.com/ao3-wrapped-without-password/) (updated 2026-11-25): Yes. How password websites, Colab notebooks, browser extensions, bookmarklets and paste tools make an AO3 Wrapped, and which ones never see your AO3 login.
+- [Can I get AO3 Wrapped without giving my password?](https://ficwrapped.yansquared.com/ao3-wrapped-without-password/) (updated 2026-11-26): Every AO3 Wrapped tool we could find, from BotHermione to Colab notebooks and browser extensions: which ask for your AO3 password, where they run and which work on a phone.
 - [Can I still get my AO3 Wrapped for 2025?](https://ficwrapped.yansquared.com/ao3-wrapped-2025/) (updated 2026-11-25): You can make an AO3 Wrapped for 2025 or any earlier year, but it will be incomplete. Why AO3 History moves reread fics to the latest year, and how to do it.
 - [Can other people see my AO3 History?](https://ficwrapped.yansquared.com/can-people-see-my-ao3-history/) (updated 2026-11-25): Only you can see your AO3 History, while logged in. Where to find it, what it records, and how to delete entries, clear it or switch it off.
 - [Can I export my AO3 History?](https://ficwrapped.yansquared.com/ao3-history-export/) (updated 2026-11-25): AO3 has no export button for History or Marked for Later. How to save your AO3 History as a CSV spreadsheet or an offline page for free.
@@ -101,5 +119,5 @@ No. AO3 says works you visited while History was on are still saved after you sw
 - [Privacy and refunds](https://ficwrapped.yansquared.com/privacy/)
 
 Source code: https://github.com/helloyansquared/ficwrapped
-Related: [FicToEpub, AO3 HTML to EPUB converter](https://fictoepub.pages.dev/) · [BotToBook, Character.AI chats to PDF and EPUB](https://bottobook.yansquared.com/)
+Related: [FicToEpub, AO3 HTML to EPUB converter](https://fictoepub.yansquared.com/) · [BotToBook, Character.AI chats to PDF and EPUB](https://bottobook.yansquared.com/)
 Contact: hello@yansquared.com

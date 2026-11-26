@@ -34,11 +34,31 @@ def facts_table():
 # Ways people make an AO3 Wrapped. Described by method, not by naming tools. (checked 25 November 2026)
 METHODS = [
     ("Website that logs in for you", "Yes, your AO3 password", "Their server", "Yes", "Everything your account can see, until you change your password"),
-    ("Colab notebook", "Usually your username and password, or a session cookie", "Google's servers", "Awkward", "Depends on the code; the notebook runs with your login"),
+    ("Colab notebook or script", "Usually your AO3 username and password", "Google's servers", "Awkward", "Depends on the code; the notebook runs with your login"),
     ("Browser extension", "No", "Your browser", "Only where the browser supports extensions (e.g. Firefox for Android)", "Whatever its permissions allow"),
     ("Bookmarklet (FicWrapped)", "No", "Your own AO3 tab", "Yes, Safari and Chrome", "Nothing: the list goes from your AO3 tab to the FicWrapped tab"),
     ("Paste History pages (FicWrapped)", "No", "The FicWrapped page", "Yes", "Only what you paste"),
 ]
+
+TOOLS_CHECKED = "26 November 2026"
+# Named AO3 Wrapped tools, from each tool's own page, repository or store listing (checked by hand and by the advisor).
+# (name, url, how it reads History, where it runs, phone, price, source)
+TOOLS = [
+    ("BotHermione Wrapped", "https://www.bothermione.com/wrapped", "Asks for your AO3 password and logs in for you; says it stores none of your details", "Their server (the page says a Flask container on Heroku)", "Not stated", "Not stated", "Its own page; the text refers to 2023"),
+    ("ao3wrapped (teresachenec)", "https://github.com/teresachenec/ao3wrapped", "You type your AO3 username and password into the Python script", "Your own computer (Python)", "Not stated", "Free (public code)", "GitHub README"),
+    ("ao3-wrapped (twitchy-ears)", "https://github.com/twitchy-ears/ao3-wrapped", "Asks for your AO3 username and password, then scans History", "Your own computer (Python script, Windows or Linux app)", "Not stated", "Free (public code, GPL-3.0)", "GitHub README"),
+    ("Colab notebook (nyxbda)", "https://any-other-fandom-blog.tumblr.com/post/738316878158692352/for-those-who-are-not-as-familiar-with-python-and", "AO3 username and password by default; the author also describes an extension route", "Google Colab, or your own computer", "Not stated", "Not stated", "Author's Tumblr post"),
+    ("AO3-Wrapped notebook (anulomufa)", "https://github.com/anulomufa/AO3-Wrapped", "You run a Login cell to sign in to AO3; the method isn't described", "Google Colab or Jupyter", "Not stated", "Free (public code)", "GitHub README"),
+    ("AO3 Wrapped (ao3wrapped.vercel.app)", "https://ao3wrapped.vercel.app/", "Chrome extension; the site says no AO3 username or password is needed", "Your browser, according to the site", "Not stated", "Not stated", "Its own home page (no install link found)"),
+    ("AO3-wrapped Firefox add-on (Ariadne)", "https://addons.mozilla.org/en-US/firefox/addon/ao3-wrapped/", "Firefox extension with access to archiveofourown.org; marked beta", "Your browser", "Listed for Firefox for Android", "Not stated", "Mozilla add-ons listing"),
+    ("AO3+ Firefox add-on (Gita)", "https://addons.mozilla.org/en-US/firefox/addon/ao3-plus/", "Firefox extension; includes a yearly stats page called AO3 Wrapped", "Your browser", "Listed for Firefox for Android", "Not stated", "Mozilla add-ons listing"),
+    ("FicWrapped (this site)", "https://ficwrapped.yansquared.com/", "Bookmark on your logged-in AO3 tab, or paste History pages; never asks for a password", "Your own browser", "Yes: Safari or Chrome bookmark, or paste", "Free; optional $3.99 Supporter Pack", "This site"),
+]
+
+def tools_table():
+    head = "<tr><th scope=\"col\">Tool</th><th scope=\"col\">How it gets your History</th><th scope=\"col\">Where it runs</th><th scope=\"col\">Phone</th><th scope=\"col\">Price</th><th scope=\"col\">Source</th></tr>"
+    rows = "".join(f"<tr><th scope=\"row\"><a href=\"{u}\" rel=\"nofollow noopener\">{n}</a></th><td>{h}</td><td>{w}</td><td>{ph}</td><td>{pr}</td><td>{s}</td></tr>" for n, u, h, w, ph, pr, s in TOOLS)
+    return f'<div class="tablewrap"><table class="facts methods"><caption>AO3 Wrapped tools and what their own pages say (checked {TOOLS_CHECKED})</caption>{head}{rows}</table></div>'
 
 def methods_table():
     head = "<tr><th scope=\"col\">Method</th><th scope=\"col\">Needs your AO3 password or cookie?</th><th scope=\"col\">Where it runs</th><th scope=\"col\">Works on a phone</th><th scope=\"col\">What the tool's owner can see</th></tr>"
@@ -52,8 +72,12 @@ QA = {
         "Drag the AO3 Wrapped bookmark from ficwrapped.yansquared.com to your bookmarks bar, open AO3 while logged in and click it. It reads your History pages for the year, then you click Open my Wrapped to see and save your cards. It takes about a minute for most readers."),
     "password": ("Does FicWrapped need my AO3 password?",
         "No. You log in to AO3 yourself, on AO3, as usual. The bookmark runs in that AO3 tab, reads only your History pages and passes the list to the FicWrapped tab you open. It never sees your password or cookies, and nothing is uploaded to a server."),
+    "tools": ("What AO3 Wrapped tools are there?",
+        "None are official; all are fan-made. On 26 November 2026 we found a website that logs in for you (BotHermione Wrapped), Python scripts you run yourself (teresachenec's ao3wrapped and twitchy-ears' ao3-wrapped), Colab notebooks (nyxbda's and anulomufa's), browser extensions (ao3wrapped.vercel.app for Chrome, and the AO3-wrapped and AO3+ add-ons for Firefox) and FicWrapped, which uses a bookmark or pasted History pages. The table on our AO3 Wrapped without a password page lists what each one says about passwords, where it runs and phones."),
+    "whichpass": ("Which AO3 Wrapped tools ask for my AO3 password?",
+        "Going by their own pages on 26 November 2026: BotHermione Wrapped, teresachenec's ao3wrapped, twitchy-ears' ao3-wrapped and the default mode of nyxbda's Colab notebook ask for your AO3 username and password. The ao3wrapped.vercel.app Chrome extension says it needs neither, and FicWrapped never asks for a password. The two Firefox add-on listings don't say either way, and anulomufa's notebook has a login step whose method isn't described. We haven't tested or audited these tools."),
     "nopass": ("Is there an AO3 Wrapped that doesn't need my password?",
-        "Yes. Tools that run in your own logged-in browser, like bookmarklets and some extensions, or that read History pages you paste, never receive your AO3 password. FicWrapped works both ways. Websites and most Colab notebooks that log in for you do need it."),
+        "Yes. Tools that run in your own logged-in browser, like bookmarklets and some extensions, or that read History pages you paste, never receive your AO3 password. FicWrapped works both ways. Websites, scripts and most Colab notebooks that log in for you do need it."),
     "phone": ("Can I make my AO3 Wrapped on my phone?",
         "Yes. On iPhone Safari and Android Chrome you can save the bookmark code as a bookmark and tap it on AO3; the steps are on the home page. If that's fiddly, copy your History pages one at a time and paste them into FicWrapped instead."),
     "unfinished": ("Why does my Wrapped count fics I didn't finish?",
@@ -157,16 +181,20 @@ PAGES = [
     },
     {
         "slug": "ao3-wrapped-without-password",
-        "updated": "2026-11-25",
+        "updated": "2026-11-26",
         "crumb": "AO3 Wrapped without a password",
-        "title": "AO3 Wrapped Without a Password: 5 Ways Compared | FicWrapped",
+        "title": "AO3 Wrapped Without Password: Tools Compared | FicWrapped",
         "h1": "Can I get AO3 Wrapped without giving my password?",
-        "description": "Yes. How password websites, Colab notebooks, browser extensions, bookmarklets and paste tools make an AO3 Wrapped, and which ones never see your AO3 login.",
-        "answer": "Yes. AO3 Wrapped tools that run inside your own logged-in browser, such as bookmarklets and extensions, or that read History pages you paste, never receive your AO3 password. Websites and most Colab notebooks that log in for you do need it. FicWrapped uses a bookmarklet or paste, and its code is public.",
+        "description": "Every AO3 Wrapped tool we could find, from BotHermione to Colab notebooks and browser extensions: which ask for your AO3 password, where they run and which work on a phone.",
+        "answer": "Yes. AO3 Wrapped tools that run inside your own logged-in browser, such as bookmarklets and extensions, or that read History pages you paste, never receive your AO3 password. Websites, scripts and most Colab notebooks that log in for you do need it. FicWrapped uses a bookmarklet or paste, and its code is public.",
         "image": ("ficwrapped-example-5-summary", "Example AO3 Wrapped summary card laid out like an AO3 work header"),
         "body": """<h2>Five ways to make an AO3 Wrapped</h2>
 <p>AO3 hides your History behind your login, so every AO3 Wrapped tool has to get at it somehow. These are the ways they do it.</p>
 {METHODS}
+<h2 id="tools">AO3 Wrapped tools, named</h2>
+<p>Here are the AO3 Wrapped tools we could find and load on 26 November 2026, with what each one says about itself on its own page, repository or store listing. Where a page doesn't say something, the cell reads “Not stated” instead of a guess, and we haven't tested or audited any of them. Fan tools change and disappear often, so check a tool's own page before you use it.</p>
+{TOOLS}
+<p class="src">FicWrapped is our own tool; every other row comes from that tool's own page. None of these tools, including FicWrapped, is made by or affiliated with AO3 or the Organization for Transformative Works. Spotted a mistake or a tool we missed? Email hello@yansquared.com.</p>
 <h2>How to tell whether a tool wants your login</h2>
 <ul>
 <li>It asks for your AO3 username and password, or for a “session cookie” or “_otwarchive_session” value: it logs in as you.</li>
@@ -177,7 +205,7 @@ PAGES = [
 <p>Change your AO3 password from your account settings on archiveofourown.org. Changing it means the old password stops working anywhere you gave it.</p>
 <h2>How FicWrapped does it</h2>
 <p>The FicWrapped bookmark loads <a href="/c.js">a short script</a> into your AO3 tab. It reads only <code>/users/your-name/readings</code>, about one page a second, and hands the list to the FicWrapped tab you open. Nothing goes to a server. If you'd rather not run code on AO3 at all, <a href="/#load">paste your History pages</a> instead. The source is on <a href="https://github.com/helloyansquared/ficwrapped">GitHub</a>.</p>""",
-        "faq": ["nopass", "password", "safe", "official"],
+        "faq": ["nopass", "whichpass", "tools", "password", "safe", "official"],
         "links": ["is-ao3-wrapped-safe", "how-to-do-ao3-wrapped", "ao3-wrapped-on-phone"],
     },
     {
@@ -252,7 +280,7 @@ PAGES = [
 </ol>
 <h2>What the export includes</h2>
 <p>For every work: last visited date, visit count, title, authors, fandoms, rating, categories, warnings, relationships, characters, additional tags, word count, chapters, complete or in progress, kudos, hits, language, whether it's marked for later or has an update, and the AO3 link. Deleted works are listed with their last-visited date only.</p>
-<p>If you want the fics themselves, download them from AO3 and convert them with <a href="https://fictoepub.pages.dev/">FicToEpub</a>.</p>""",
+<p>If you want the fics themselves, download them from AO3 and convert them with <a href="https://fictoepub.yansquared.com/">FicToEpub</a>.</p>""",
         "faq": ["empty", "free", "fictoepub"],
         "links": ["can-people-see-my-ao3-history", "ao3-wrapped-2025", "how-to-do-ao3-wrapped"],
     },
