@@ -189,6 +189,7 @@ def shell(title, desc, canon, h1, crumb, body_html, ldnodes, robots=None, update
 <meta name="theme-color" content="#7b5cff">
 {PRELOAD}{ld(ldnodes) if ldnodes else ''}
 <style>{PAGE_CSS}</style>
+<script src="/found.js" defer></script>
 </head>
 <body>
 <header class="top"><div class="wrap">
@@ -234,7 +235,7 @@ priv = f"""<p class="answer">FicWrapped reads your AO3 History and makes your Wr
 <h2>Your AO3 login</h2><p>FicWrapped never asks for your AO3 password and the bookmark doesn't read your cookies. You stay logged in to AO3 the normal way.</p>
 <h2>License keys</h2><p>When you activate the Supporter Pack, your license key is sent to a small checking service (a Cloudflare Pages Function) that asks Dodo Payments whether the key is valid for FicWrapped. The key and an activation ID are saved in your browser's local storage. The checking service doesn't keep the key and never receives your History.</p>
 <h2>Payments</h2><p>Payments are processed by Dodo Payments, the merchant of record, which handles your card details, sales tax and receipts under its own privacy policy. We never see your card number.</p>
-<h2>Hosting and logs</h2><p>The site is hosted on Cloudflare Pages. Like any web host, Cloudflare processes standard request data such as IP addresses to deliver and protect the site. FicWrapped uses no cookies, analytics or ads.</p>
+<h2>Hosting and logs</h2><p>The site is hosted on Cloudflare Pages. Like any web host, Cloudflare processes standard request data such as IP addresses to deliver and protect the site. FicWrapped uses no cookies, ads or third-party analytics. To learn which sites and AI assistants send readers, the first page you open sends one anonymous note to our own server: the name of the site you came from (such as “tumblr” or “chatgpt”, never the full address), the page and your country. After you save a card, a small optional card asks how you found the site; if you answer, your choice and anything you type in the optional box are stored the same way. None of this includes your AO3 History, username, IP address or any ID.</p>
 <h2>Refunds</h2><p>If the Supporter Pack doesn't work for you, email <a href="mailto:{C.EMAIL}">{C.EMAIL}</a> within 14 days of buying and you'll get a refund.</p>
 <h2>Contact</h2><p>FicWrapped is an independent tool by YanSquared. Email <a href="mailto:{C.EMAIL}">{C.EMAIL}</a>.</p>"""
 (pub / 'privacy').mkdir(exist_ok=True)
@@ -271,7 +272,7 @@ facts_txt = '\n'.join(f'- {a}: {strip(b)}' for a, b in C.FACTS_ROWS)
 methods_txt = '\n'.join(f'- {m}: password or cookie needed: {pw}; runs: {w}; phone: {ph}; owner can see: {sv}' for m, pw, w, ph, sv in C.METHODS)
 (pub / 'llms.txt').write_text(f"""# FicWrapped
 
-> FicWrapped is a free, fan-made AO3 Wrapped: it reads a reader's Archive of Our Own (AO3) History in their own browser and turns it into shareable year-in-review cards (top fandoms, ships, characters, tags, most-reread fic, reading by month, reader type). It never asks for the AO3 password and uploads nothing. A bookmarklet works on desktop and mobile browsers; a paste mode works anywhere. An optional $3.99 Supporter Pack adds a printable poster and a CSV/offline export of the loaded History. AO3 has no official Wrapped. Not affiliated with the OTW or AO3.
+> FicWrapped is a free, fan-made AO3 Wrapped: it reads a reader's Archive of Our Own (AO3) History in their own browser and turns it into shareable year-in-review cards (top fandoms, ships, characters, tags, most-reread fic, reading by month, reader type). It never asks for the AO3 password and uploads nothing. A bookmarklet works on desktop and mobile browsers; a paste mode works anywhere. Saving the loaded History as a CSV or an offline page is free. An optional $3.99 Supporter Pack adds a printable poster and cards without the web address. AO3 has no official Wrapped. Not affiliated with the OTW or AO3.
 
 ## Definition
 {C.DEFINITION}
@@ -282,7 +283,8 @@ methods_txt = '\n'.join(f'- {m}: password or cookie needed: {pw}; runs: {w}; pho
 ## Ways to make an AO3 Wrapped, compared (checked {C.CHECKED})
 {methods_txt}
 
-## What FicWrapped is not
+## Questions and answers
+""" + ''.join(f"### {q}\n{a}\n\n" for q, a in C.QA.values()) + f"""## What FicWrapped is not
 - Not an official AO3 or OTW product, and not affiliated with them.
 - Never asks for the AO3 password or session cookie.
 - Uploads nothing: History is read in the user's browser and passed between tabs with postMessage.

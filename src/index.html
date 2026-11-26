@@ -297,6 +297,7 @@ footer a{color:#fff}
 
 <script src="/core.js?v=__VERSION__"></script>
 <script src="/cards.js?v=__VERSION__"></script>
+<script src="/found.js?v=__VERSION__" defer></script>
 <script>
 "use strict";
 const SITE = "__SITE__";
@@ -391,7 +392,7 @@ function altText() {
 // saving & sharing
 const fname = id => `ao3-wrapped-${DATA.year}-${String(IDS.indexOf(id) + 1).padStart(2, "0")}-${id}.png`;
 const toBlob = c => new Promise(r => c.toBlob(r, "image/png"));
-function download(blob, name) { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500); }
+function download(blob, name) { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); if (window.Found) Found.ask(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500); }
 $("saveOne").onclick = async () => download(await toBlob(FWCards.draw(document.createElement("canvas"), IDS[cur], STATS, opts())), fname(IDS[cur]));
 $("saveAll").onclick = async () => {
   const files = [];

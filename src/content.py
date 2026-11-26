@@ -66,6 +66,8 @@ QA = {
         "About one second per History page of 25 fics, so 400 fics take around 20 seconds. If AO3 asks it to slow down, FicWrapped waits and continues on its own. You can also stop early and use what's loaded."),
     "free": ("Is FicWrapped free?",
         "Yes, the whole Wrapped is free. An optional $3.99 Supporter Pack adds a printable poster and cards without the web address. Saving your History as a CSV or an offline page is free."),
+    "forwho": ("Who is FicWrapped for, and when should I use something else?",
+        "FicWrapped is for AO3 readers who want a year in review of their own reading without giving a website their password. It works in any browser that can run a bookmark, including phones, or by pasting your History. Use something else if you want statistics for all of AO3 (AO3's yearly statistics posts cover the whole archive) or numbers for works you posted (your AO3 dashboard has Stats for those). If your AO3 History was switched off, FicWrapped can only count what History recorded."),
     "safe": ("Is it safe to run a bookmark on AO3?",
         "A bookmark runs code in the AO3 tab, so only use ones you can read. FicWrapped's script is short, published at ficwrapped.yansquared.com/c.js and on GitHub, and it only fetches your own History pages. If you'd rather not run any code on AO3, use the paste option."),
     "blocked": ("Will AO3 block me for using it?",
@@ -83,7 +85,7 @@ QA = {
     "keepoff": ("If I switch History off, is my old History deleted?",
         "No. AO3 says works you visited while History was on are still saved after you switch it off; you just have to switch it back on to see them. To remove them, use Clear History, which can't be undone."),
 }
-HOME_FAQ = ["official", "how", "password", "phone", "unfinished", "months", "empty", "slow", "lastyear", "free", "safe", "blocked", "topships", "fictoepub"]
+HOME_FAQ = ["official", "how", "password", "phone", "unfinished", "months", "empty", "slow", "lastyear", "free", "forwho", "safe", "blocked", "topships", "fictoepub"]
 
 PAGES = [
     {
