@@ -71,6 +71,8 @@ QA = {
         "No. AO3 doesn't make a personal year-in-review. Every AO3 Wrapped is fan-made from your AO3 History. FicWrapped is one of them: it reads your History in your own browser and turns it into shareable cards, without asking for your password."),
     "how": ("How do I do AO3 Wrapped?",
         "Drag the AO3 Wrapped bookmark from ficwrapped.yansquared.com to your bookmarks bar, open AO3 while logged in and click it. It reads your History pages for the year, then you click Open my Wrapped to see and save your cards. It takes about a minute for most readers."),
+    "stats": ("How do I see my AO3 reading stats?",
+        "AO3 doesn't show reading statistics. Its Statistics page (My Dashboard → Statistics) only covers your own works and account: hits, kudos, comment threads, bookmarks, subscriptions and word count. AO3 says that for privacy reasons, further statistics about a user's activity aren't available. If History is turned on, AO3 does track when and how often you visited each work. FicWrapped reads that History in your own browser and turns it into reading stats for the year: fics and words opened, top fandoms, ships, characters and tags."),
     "password": ("Does FicWrapped need my AO3 password?",
         "No. You log in to AO3 yourself, on AO3, as usual. The bookmark runs in that AO3 tab, reads only your History pages and passes the list to the FicWrapped tab you open. It never sees your password or cookies, and nothing is uploaded to a server."),
     "tools": ("What AO3 Wrapped tools are there?",
@@ -110,7 +112,7 @@ QA = {
     "keepoff": ("If I switch History off, is my old History deleted?",
         "No. AO3 says works you visited while History was on are still saved after you switch it off; you just have to switch it back on to see them. To remove them, use Clear History, which can't be undone."),
 }
-HOME_FAQ = ["official", "how", "password", "phone", "unfinished", "months", "empty", "slow", "lastyear", "free", "forwho", "safe", "blocked", "topships", "fictoepub"]
+HOME_FAQ = ["official", "how", "stats", "password", "phone", "unfinished", "months", "empty", "slow", "lastyear", "free", "forwho", "safe", "blocked", "topships", "fictoepub"]
 
 PAGES = [
     {
@@ -282,7 +284,7 @@ PAGES = [
 <h2>What the export includes</h2>
 <p>For every work: last visited date, visit count, title, authors, fandoms, rating, categories, warnings, relationships, characters, additional tags, word count, chapters, complete or in progress, kudos, hits, language, whether it's marked for later or has an update, and the AO3 link. Deleted works are listed with their last-visited date only.</p>
 <p>If you want the fics themselves, download them from AO3 and convert them with <a href="https://fictoepub.yansquared.com/">FicToEpub</a>.</p>""",
-        "faq": ["empty", "free", "fictoepub"],
+        "faq": ["stats", "empty", "free", "fictoepub"],
         "links": ["can-people-see-my-ao3-history", "ao3-wrapped-2025", "how-to-do-ao3-wrapped"],
     },
     {

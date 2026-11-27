@@ -45,6 +45,9 @@ No. AO3 doesn't make a personal year-in-review. Every AO3 Wrapped is fan-made fr
 ### How do I do AO3 Wrapped?
 Drag the AO3 Wrapped bookmark from ficwrapped.yansquared.com to your bookmarks bar, open AO3 while logged in and click it. It reads your History pages for the year, then you click Open my Wrapped to see and save your cards. It takes about a minute for most readers.
 
+### How do I see my AO3 reading stats?
+AO3 doesn't show reading statistics. Its Statistics page (My Dashboard → Statistics) only covers your own works and account: hits, kudos, comment threads, bookmarks, subscriptions and word count. AO3 says that for privacy reasons, further statistics about a user's activity aren't available. If History is turned on, AO3 does track when and how often you visited each work. FicWrapped reads that History in your own browser and turns it into reading stats for the year: fics and words opened, top fandoms, ships, characters and tags.
+
 ### Does FicWrapped need my AO3 password?
 No. You log in to AO3 yourself, on AO3, as usual. The bookmark runs in that AO3 tab, reads only your History pages and passes the list to the FicWrapped tab you open. It never sees your password or cookies, and nothing is uploaded to a server.
 
