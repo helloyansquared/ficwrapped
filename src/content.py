@@ -21,6 +21,7 @@ FACTS_ROWS = [
     ("Words", "The work's full word count as shown on AO3, not the chapters you actually read."),
     ("Visits", "AO3's own \"Visited N times\" counter for each work, which is how the most-reread card is chosen."),
     ("Deleted works", "Counted separately. AO3 keeps only the date for them, so they aren't in the fandom or tag totals."),
+    ("AO3 outage, 2026", "AO3 was offline from 29 October to 15 November 2026, so no one's History has visits from those days."),
     ("Reading time", "Total words ÷ 250 words a minute."),
     ("Speed", "The bookmark reads about one History page (25 fics) a second. If AO3 asks it to slow down, it waits and carries on."),
     ("What you need", "An AO3 account, logged in, with History switched on (AO3 Preferences → Turn on History)."),
@@ -86,9 +87,11 @@ QA = {
     "unfinished": ("Why does my Wrapped count fics I didn't finish?",
         "AO3 History records every work you open, not every work you finish, and it shows each work's full word count. So the totals are fics and words you opened. Most AO3 Wrapped tools count the same way."),
     "months": ("Why do some months look empty?",
-        "AO3 keeps only the last time you visited each work. If you read a fic in February and reopened it in November, it shows up in November. Fics you removed from your History, or read while logged out or with History off, aren't counted."),
+        "AO3 keeps only the last time you visited each work. If you read a fic in February and reopened it in November, it shows up in November. Fics you removed from your History, or read while logged out or with History off, aren't counted. AO3 was also offline from 29 October to 15 November 2026, so no one's History has visits from those days."),
     "empty": ("Why is my AO3 History empty?",
         "AO3 only saves History while it's switched on. Check Preferences on AO3 and turn on History. If you cleared your History, those visits are gone and no tool can get them back."),
+    "low": ("Why are my numbers lower than I expected?",
+        "Usually because AO3 keeps only the last date you opened each work: a fic you read in 2025 and reopened in 2026 counts once, in 2026, and rereads count as one fic. Fics read while logged out, with History switched off, or removed from History aren't counted. And AO3 was offline from 29 October to 15 November 2026, so those weeks are empty for everyone."),
     "slow": ("How long does it take?",
         "About one second per History page of 25 fics, so 400 fics take around 20 seconds. If AO3 asks it to slow down, FicWrapped waits and continues on its own. You can also stop early and use what's loaded."),
     "free": ("Is FicWrapped free?",
@@ -96,7 +99,7 @@ QA = {
     "forwho": ("Who is FicWrapped for, and when should I use something else?",
         "FicWrapped is for AO3 readers who want a year in review of their own reading without giving a website their password. It works in any browser that can run a bookmark, including phones, or by pasting your History. Use something else if you want statistics for all of AO3 (AO3's yearly statistics posts cover the whole archive) or numbers for works you posted (your AO3 dashboard has Stats for those). If your AO3 History was switched off, FicWrapped can only count what History recorded."),
     "safe": ("Is it safe to run a bookmark on AO3?",
-        "A bookmark runs code in the AO3 tab, so only use ones you can read. FicWrapped's script is short, published at ficwrapped.yansquared.com/c.js and on GitHub, and it only fetches your own History pages. If you'd rather not run any code on AO3, use the paste option."),
+        "A bookmark runs code in the AO3 tab, so only use ones you can read. FicWrapped's script is short, published at ficwrapped.yansquared.com/c.js and on GitHub, and it only fetches your own History and Marked for Later list pages, about one a second. It never opens a work, so it can't add works to your History or add hits. FicWrapped is an unofficial fan tool. If you'd rather not run any code on AO3, use the paste option."),
     "blocked": ("Will AO3 block me for using it?",
         "FicWrapped reads your History at about the pace of someone clicking Next, and it backs off when AO3 says to retry later. That's far gentler than downloading fics. If AO3 is down or under maintenance, wait and try again later."),
     "lastyear": ("Can I make an AO3 Wrapped for last year?",
@@ -112,12 +115,12 @@ QA = {
     "keepoff": ("If I switch History off, is my old History deleted?",
         "No. AO3 says works you visited while History was on are still saved after you switch it off; you just have to switch it back on to see them. To remove them, use Clear History, which can't be undone."),
 }
-HOME_FAQ = ["official", "how", "stats", "password", "phone", "unfinished", "months", "empty", "slow", "lastyear", "free", "forwho", "safe", "blocked", "topships", "fictoepub"]
+HOME_FAQ = ["official", "how", "stats", "password", "phone", "unfinished", "months", "low", "empty", "slow", "lastyear", "free", "forwho", "safe", "blocked", "topships", "fictoepub"]
 
 PAGES = [
     {
         "slug": "how-to-do-ao3-wrapped",
-        "updated": "2026-11-25",
+        "updated": "2026-11-27",
         "crumb": "How to do AO3 Wrapped",
         "title": "How to Do AO3 Wrapped 2026: 1-Minute Tutorial | FicWrapped",
         "h1": "How do I do AO3 Wrapped?",
@@ -144,7 +147,7 @@ PAGES = [
 <li><b>Nothing happens when you click the bookmark:</b> some browser extensions block bookmarklets. Try another browser, or <a href="/#load">paste your History</a> instead.</li>
 </ul>
 {FACTS}""",
-        "faq": ["how", "slow", "empty", "months"],
+        "faq": ["how", "slow", "empty", "months", "low"],
         "links": ["ao3-wrapped-on-phone", "ao3-wrapped-without-password", "ao3-wrapped-2025"],
     },
     {
@@ -184,7 +187,7 @@ PAGES = [
     },
     {
         "slug": "ao3-wrapped-without-password",
-        "updated": "2026-11-26",
+        "updated": "2026-11-27",
         "crumb": "AO3 Wrapped without a password",
         "title": "AO3 Wrapped Without Password: Tools Compared | FicWrapped",
         "h1": "Can I get AO3 Wrapped without giving my password?",
@@ -213,7 +216,8 @@ PAGES = [
     },
     {
         "slug": "ao3-wrapped-2025",
-        "updated": "2026-11-25",
+        "updated": "2026-11-27",
+        "cta": "Make my 2026 Wrapped",
         "crumb": "AO3 Wrapped 2025",
         "title": "AO3 Wrapped 2025: Can You Still Get Last Year? | FicWrapped",
         "h1": "Can I still get my AO3 Wrapped for 2025?",
@@ -289,7 +293,7 @@ PAGES = [
     },
     {
         "slug": "is-ao3-wrapped-safe",
-        "updated": "2026-11-25",
+        "updated": "2026-11-27",
         "crumb": "Is AO3 Wrapped safe?",
         "title": "Is AO3 Wrapped Safe? What Each Tool Can See | FicWrapped",
         "h1": "Is AO3 Wrapped safe to use?",
@@ -303,12 +307,13 @@ PAGES = [
 <ul>
 <li>Loads two small files from ficwrapped.yansquared.com: <a href="/c.js">c.js</a> (the box you see) and <a href="/core.js">core.js</a> (reads the pages).</li>
 <li>Fetches only <code>/users/your-name/readings</code> pages, about one a second, plus Marked for Later if you tick it.</li>
+<li>Never opens a work, so it can't add works to your History or add hits. (AO3's <a href="https://archiveofourown.org/known_issues">Known Issues</a> page says unofficial scripts or browser extensions are a likely cause when works you never viewed appear in History.)</li>
 <li>Passes the list to the FicWrapped tab you open with <code>postMessage</code>. No server receives it.</li>
 <li>Doesn't read your password, cookies, messages, drafts or anything else on your account.</li>
 </ul>
 <p>The source is on <a href="https://github.com/helloyansquared/ficwrapped">GitHub</a>. If you'd rather not run any code on AO3, use <a href="/#load">paste mode</a>.</p>
 <h2>Is AO3 itself safe right now?</h2>
-<p>As of 25 November 2026: the Organization for Transformative Works (OTW), which runs AO3, said on 30 October 2026 that it had detected evidence of a security incident and took AO3 offline. AO3 came back on 15 November 2026 with some features temporarily switched off. OTW said no AO3 data was deleted and that it was working with an outside security firm; it hadn't said whether account information was taken. For current advice, read OTW's own updates at <a href="https://www.transformativeworks.org/">transformativeworks.org</a> and the <a href="https://x.com/AO3_Status">@AO3_Status</a> account.</p>
+<p>As of 27 November 2026: AO3 went offline on 29 October 2026, and on 30 October the Organization for Transformative Works (OTW), which runs AO3, said it had detected evidence of a security incident. AO3 came back on 15 November 2026 with some features temporarily switched off. In its 15 November update on the <a href="https://www.otwstatus.org/incidents/g12jnxck9g6h">OTW status page</a>, OTW said it has "no reason to believe that the user database was compromised, though we cannot rule out that possibility". It recommends you consider changing your AO3 password and make sure your account email is up to date, and change your password on any other site where you reused your AO3 password. OTW also said no AO3 data was deleted and that it was working with an outside security firm. FicWrapped never asks for your AO3 password, so changing it doesn't affect FicWrapped. For current advice, read OTW's own updates on its status page and the <a href="https://x.com/AO3_Status">@AO3_Status</a> account.</p>
 <h2>General tips</h2>
 <ul><li>Never give a third-party site your AO3 password.</li><li>If you already did, change your AO3 password so the old one stops working.</li><li>Be wary of “AO3 Wrapped” links in comments or fics that ask you to log in on a page that isn't archiveofourown.org.</li></ul>""",
         "faq": ["nopass", "safe", "blocked"],

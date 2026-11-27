@@ -215,7 +215,7 @@ for p in C.PAGES:
     url = U(p['slug'])
     img = p.get('image')
     fig = (f'<figure class="shot"><img loading="lazy" src="/img/examples/{img[0]}-270.webp" srcset="/img/examples/{img[0]}-540.webp 2x" width="270" height="480" alt="{esc(img[1])}"><figcaption>Example card, made from sample data</figcaption></figure>\n') if img else ''
-    body = (f'<p class="answer">{tx(p["answer"])}</p>\n<a class="cta" href="/">Make my AO3 Wrapped</a>\n'
+    body = (f'<p class="answer">{tx(p["answer"])}</p>\n<a class="cta" href="/">{p.get("cta", "Make my AO3 Wrapped")}</a>\n'
             f'<p class="meta">Last updated: <time datetime="{p["updated"]}">{human(p["updated"])}</time>. Free, no password, nothing uploaded.</p>\n'
             + fig + p['body'].replace('{FACTS}', '<h2>How the numbers are counted</h2>' + C.facts_table()).replace('{METHODS}', C.methods_table()).replace('{TOOLS}', C.tools_table())
             + f'\n<h2>Questions</h2>\n{faq_html(p["faq"])}\n'

@@ -13,6 +13,7 @@ AO3 Wrapped is a fan-made, Spotify-Wrapped-style year in review of your reading 
 - Words: The work's full word count as shown on AO3, not the chapters you actually read.
 - Visits: AO3's own "Visited N times" counter for each work, which is how the most-reread card is chosen.
 - Deleted works: Counted separately. AO3 keeps only the date for them, so they aren't in the fandom or tag totals.
+- AO3 outage, 2026: AO3 was offline from 29 October to 15 November 2026, so no one's History has visits from those days.
 - Reading time: Total words ÷ 250 words a minute.
 - Speed: The bookmark reads about one History page (25 fics) a second. If AO3 asks it to slow down, it waits and carries on.
 - What you need: An AO3 account, logged in, with History switched on (AO3 Preferences → Turn on History).
@@ -67,10 +68,13 @@ Yes. On iPhone Safari and Android Chrome you can save the bookmark code as a boo
 AO3 History records every work you open, not every work you finish, and it shows each work's full word count. So the totals are fics and words you opened. Most AO3 Wrapped tools count the same way.
 
 ### Why do some months look empty?
-AO3 keeps only the last time you visited each work. If you read a fic in February and reopened it in November, it shows up in November. Fics you removed from your History, or read while logged out or with History off, aren't counted.
+AO3 keeps only the last time you visited each work. If you read a fic in February and reopened it in November, it shows up in November. Fics you removed from your History, or read while logged out or with History off, aren't counted. AO3 was also offline from 29 October to 15 November 2026, so no one's History has visits from those days.
 
 ### Why is my AO3 History empty?
 AO3 only saves History while it's switched on. Check Preferences on AO3 and turn on History. If you cleared your History, those visits are gone and no tool can get them back.
+
+### Why are my numbers lower than I expected?
+Usually because AO3 keeps only the last date you opened each work: a fic you read in 2025 and reopened in 2026 counts once, in 2026, and rereads count as one fic. Fics read while logged out, with History switched off, or removed from History aren't counted. And AO3 was offline from 29 October to 15 November 2026, so those weeks are empty for everyone.
 
 ### How long does it take?
 About one second per History page of 25 fics, so 400 fics take around 20 seconds. If AO3 asks it to slow down, FicWrapped waits and continues on its own. You can also stop early and use what's loaded.
@@ -82,7 +86,7 @@ Yes, the whole Wrapped is free. An optional $3.99 Supporter Pack adds a printabl
 FicWrapped is for AO3 readers who want a year in review of their own reading without giving a website their password. It works in any browser that can run a bookmark, including phones, or by pasting your History. Use something else if you want statistics for all of AO3 (AO3's yearly statistics posts cover the whole archive) or numbers for works you posted (your AO3 dashboard has Stats for those). If your AO3 History was switched off, FicWrapped can only count what History recorded.
 
 ### Is it safe to run a bookmark on AO3?
-A bookmark runs code in the AO3 tab, so only use ones you can read. FicWrapped's script is short, published at ficwrapped.yansquared.com/c.js and on GitHub, and it only fetches your own History pages. If you'd rather not run any code on AO3, use the paste option.
+A bookmark runs code in the AO3 tab, so only use ones you can read. FicWrapped's script is short, published at ficwrapped.yansquared.com/c.js and on GitHub, and it only fetches your own History and Marked for Later list pages, about one a second. It never opens a work, so it can't add works to your History or add hits. FicWrapped is an unofficial fan tool. If you'd rather not run any code on AO3, use the paste option.
 
 ### Will AO3 block me for using it?
 FicWrapped reads your History at about the pace of someone clicking Next, and it backs off when AO3 says to retry later. That's far gentler than downloading fics. If AO3 is down or under maintenance, wait and try again later.
@@ -113,13 +117,13 @@ No. AO3 says works you visited while History was on are still saved after you sw
 
 ## Pages
 - [Tool: make your AO3 Wrapped](https://ficwrapped.yansquared.com/)
-- [How do I do AO3 Wrapped?](https://ficwrapped.yansquared.com/how-to-do-ao3-wrapped/) (updated 2026-11-25): AO3 Wrapped tutorial for 2026: add a bookmark, click it on AO3, save your cards. About a minute, free, and nobody gets your AO3 password.
+- [How do I do AO3 Wrapped?](https://ficwrapped.yansquared.com/how-to-do-ao3-wrapped/) (updated 2026-11-27): AO3 Wrapped tutorial for 2026: add a bookmark, click it on AO3, save your cards. About a minute, free, and nobody gets your AO3 password.
 - [How do I get AO3 Wrapped on my phone?](https://ficwrapped.yansquared.com/ao3-wrapped-on-phone/) (updated 2026-11-25): Make your AO3 Wrapped on an iPhone, iPad or Android phone: save the FicWrapped bookmark in Safari or Chrome, or paste your History pages. No password, no app.
-- [Can I get AO3 Wrapped without giving my password?](https://ficwrapped.yansquared.com/ao3-wrapped-without-password/) (updated 2026-11-26): Every AO3 Wrapped tool we could find, from BotHermione to Colab notebooks and browser extensions: which ask for your AO3 password, where they run and which work on a phone.
-- [Can I still get my AO3 Wrapped for 2025?](https://ficwrapped.yansquared.com/ao3-wrapped-2025/) (updated 2026-11-25): You can make an AO3 Wrapped for 2025 or any earlier year, but it will be incomplete. Why AO3 History moves reread fics to the latest year, and how to do it.
+- [Can I get AO3 Wrapped without giving my password?](https://ficwrapped.yansquared.com/ao3-wrapped-without-password/) (updated 2026-11-27): Every AO3 Wrapped tool we could find, from BotHermione to Colab notebooks and browser extensions: which ask for your AO3 password, where they run and which work on a phone.
+- [Can I still get my AO3 Wrapped for 2025?](https://ficwrapped.yansquared.com/ao3-wrapped-2025/) (updated 2026-11-27): You can make an AO3 Wrapped for 2025 or any earlier year, but it will be incomplete. Why AO3 History moves reread fics to the latest year, and how to do it.
 - [Can other people see my AO3 History?](https://ficwrapped.yansquared.com/can-people-see-my-ao3-history/) (updated 2026-11-25): Only you can see your AO3 History, while logged in. Where to find it, what it records, and how to delete entries, clear it or switch it off.
 - [Can I export my AO3 History?](https://ficwrapped.yansquared.com/ao3-history-export/) (updated 2026-11-25): AO3 has no export button for History or Marked for Later. How to save your AO3 History as a CSV spreadsheet or an offline page for free.
-- [Is AO3 Wrapped safe to use?](https://ficwrapped.yansquared.com/is-ao3-wrapped-safe/) (updated 2026-11-25): Is AO3 Wrapped safe? It depends on the method. What password sites, Colab notebooks, extensions, bookmarklets and paste tools can each see on your account.
+- [Is AO3 Wrapped safe to use?](https://ficwrapped.yansquared.com/is-ao3-wrapped-safe/) (updated 2026-11-27): Is AO3 Wrapped safe? It depends on the method. What password sites, Colab notebooks, extensions, bookmarklets and paste tools can each see on your account.
 - [Privacy and refunds](https://ficwrapped.yansquared.com/privacy/)
 
 Source code: https://github.com/helloyansquared/ficwrapped

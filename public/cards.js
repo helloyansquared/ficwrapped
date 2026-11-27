@@ -40,7 +40,7 @@
       for (let i = 0; i < total; i++) { ctx.globalAlpha = i <= idx ? 1 : 0.25; ctx.fillRect(M + i * (tw + 8), 52, tw, 8); }
       ctx.globalAlpha = 1;
     }
-    if (!opts.clean) { font(ctx, 30, 600, D); ctx.globalAlpha = 0.8; ctx.fillText("ficwrapped.yansquared.com", M, H - 78); ctx.globalAlpha = 1; }
+    if (!opts.clean) { font(ctx, 44, 700, D); ctx.fillText("ficwrapped.yansquared.com", M, H - 78); }
     else { font(ctx, 30, 600, D); ctx.globalAlpha = 0.55; ctx.fillText("FicWrapped", M, H - 78); ctx.globalAlpha = 1; }
     squares(ctx, W - M - 64, H - 122, 28);
   }
@@ -167,7 +167,7 @@
         ctx.fillRect(M + i * bw + 6, base - h, bw - 12, h); ctx.lineWidth = 4; ctx.strokeStyle = C.ink; ctx.strokeRect(M + i * bw + 6, base - h, bw - 12, h);
         ctx.fillStyle = C.ink; font(ctx, 28, 600, D); ctx.textAlign = "center"; ctx.fillText(MONTHS[i][0], M + i * bw + bw / 2, base + 44); ctx.textAlign = "left";
       });
-      ctx.globalAlpha = 0.7; font(ctx, 30, 400, D); text(ctx, "AO3 only remembers the last time you opened each fic, so rereads count in the month you last visited.", M, 1640, W - 2 * M, 40, 2); ctx.globalAlpha = 1;
+      ctx.globalAlpha = 0.7; font(ctx, 30, 400, D); text(ctx, String(st.year) === "2026" ? "AO3 was offline 29 Oct to 15 Nov 2026, so those days are blank for everyone. Rereads count in the month you last opened them." : "AO3 only remembers the last time you opened each fic, so rereads count in the month you last visited.", M, 1640, W - 2 * M, 40, 3); ctx.globalAlpha = 1;
       return C.paper;
     },
     type(ctx, st) {
