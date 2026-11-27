@@ -1,6 +1,7 @@
 /* found.js: privacy-friendly "where do visitors come from" counter. No cookies, no IDs, no third parties.
    - Found.land(): once per tab session, sends {t:"land", src, path} to /api/hit, where src is the site that
      sent the visit (chatgpt, perplexity, google, reddit, a hostname, or "direct"). Raw URLs are never sent.
+   - Found.event(t): "made" / "saved" / "shared", once per tab session each, same fields as a landing.
    - Found.ask(): after something worked, shows a skippable one-question card ("How did you find us?"),
      at most once per browser. The answer and the optional "what did you search or ask?" go to /api/hit too. */
 (function () {
@@ -67,6 +68,13 @@
     });
     setTimeout(function () { document.body.appendChild(box); }, 900);
   }
-  window.Found = { land: land, ask: ask };
+  // One anonymous note per tab session for each step: "made" (Wrapped opened), "saved", "shared".
+  // Same fields as a landing (source site name and page), nothing about the Wrapped itself.
+  function event(t) {
+    if (!/^(made|saved|shared)$/.test(t) || ss("found-ev-" + t)) return;
+    ss("found-ev-" + t, "1");
+    send({ t: t, src: ss("found-src") || "", path: location.pathname.slice(0, 80) });
+  }
+  window.Found = { land: land, ask: ask, event: event };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", land); else land();
 })();

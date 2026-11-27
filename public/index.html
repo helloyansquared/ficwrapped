@@ -327,9 +327,9 @@ footer a{color:#fff}
 
 <footer><div class="wrap"><nav class="foot" aria-label="Guides"><a href="/">FicWrapped</a><a href="/how-to-do-ao3-wrapped/">How to do AO3 Wrapped</a><a href="/ao3-wrapped-on-phone/">AO3 Wrapped on your phone</a><a href="/ao3-wrapped-without-password/">AO3 Wrapped without a password</a><a href="/ao3-wrapped-2025/">AO3 Wrapped 2025</a><a href="/can-people-see-my-ao3-history/">Who can see your AO3 History</a><a href="/ao3-history-export/">Export your AO3 History</a><a href="/is-ao3-wrapped-safe/">Is AO3 Wrapped safe?</a><a href="/privacy/">Privacy &amp; refunds</a><a href="https://fictoepub.yansquared.com/">FicToEpub</a><a href="https://bottobook.yansquared.com/">BotToBook</a></nav>FicWrapped is an independent fan-made tool, not affiliated with the OTW or AO3. Your History is read in your browser and never uploaded. Last updated: 25 November 2026.</div></footer>
 
-<script src="/core.js?v=110a9670"></script>
-<script src="/cards.js?v=110a9670"></script>
-<script src="/found.js?v=110a9670" defer></script>
+<script src="/core.js?v=d1a6ff84"></script>
+<script src="/cards.js?v=d1a6ff84"></script>
+<script src="/found.js?v=d1a6ff84" defer></script>
 <script>
 "use strict";
 const SITE = "https://ficwrapped.yansquared.com/";
@@ -380,6 +380,7 @@ async function render() {
     status(`No fics found for ${DATA.year}. ${years.length ? "Your data covers " + years.join(", ") + ". Pick one of those years." : ""}`, true);
     return;
   }
+  if (window.Found && Found.event) Found.event("made");
   IDS = FWCards.plan(STATS); cur = 0;
   Object.keys(thumbsCache).forEach(k => delete thumbsCache[k]);
   await fontsLoad();
@@ -424,18 +425,18 @@ function altText() {
 // saving & sharing
 const fname = id => `ao3-wrapped-${DATA.year}-${String(IDS.indexOf(id) + 1).padStart(2, "0")}-${id}.png`;
 const toBlob = c => new Promise(r => c.toBlob(r, "image/png"));
-function download(blob, name) { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); if (window.Found) Found.ask(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500); }
+function download(blob, name) { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); if (window.Found && Found.event) { Found.event("saved"); Found.ask(); } setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500); }
 $("saveOne").onclick = async () => download(await toBlob(FWCards.draw(document.createElement("canvas"), IDS[cur], STATS, opts())), fname(IDS[cur]));
 $("saveAll").onclick = async () => {
   const files = [];
   for (const id of IDS) files.push(new File([await toBlob(FWCards.draw(document.createElement("canvas"), id, STATS, opts()))], fname(id), { type: "image/png" }));
-  if (navigator.canShare && navigator.canShare({ files }) && matchMedia("(pointer:coarse)").matches) { try { await navigator.share({ files, title: "My AO3 Wrapped" }); return; } catch (e) { if (e.name === "AbortError") return; } }
+  if (navigator.canShare && navigator.canShare({ files }) && matchMedia("(pointer:coarse)").matches) { try { await navigator.share({ files, title: "My AO3 Wrapped" }); if (window.Found && Found.event) { Found.event("shared"); Found.ask(); } return; } catch (e) { if (e.name === "AbortError") return; } }
   for (const f of files) { download(f, f.name); await new Promise(r => setTimeout(r, 350)); }
 };
 $("share").onclick = async () => {
   const file = new File([await toBlob(FWCards.draw(document.createElement("canvas"), IDS[cur], STATS, opts()))], fname(IDS[cur]), { type: "image/png" });
   const text = `My ${DATA.year === "all" ? "" : DATA.year + " "}AO3 Wrapped, made with FicWrapped: ${SITE}`;
-  if (navigator.canShare && navigator.canShare({ files: [file] })) { try { await navigator.share({ files: [file], text }); return; } catch (e) { if (e.name === "AbortError") return; } }
+  if (navigator.canShare && navigator.canShare({ files: [file] })) { try { await navigator.share({ files: [file], text }); if (window.Found && Found.event) { Found.event("shared"); Found.ask(); } return; } catch (e) { if (e.name === "AbortError") return; } }
   download(file, file.name);
   try { await navigator.clipboard.writeText(text); $("wLede").textContent = "Image saved. A caption with the link is on your clipboard."; } catch (e) {}
 };

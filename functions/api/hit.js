@@ -1,7 +1,7 @@
 // /api/hit: receives anonymous counts from /found.js (which site sent a visit; the optional
 // "how did you find us?" answer). No IPs, cookies or IDs are stored. Rows go to the D1 database
 // bound as DB (table hits, kept 180 days) and to the Analytics Engine dataset bound as HITS.
-const TYPES = new Set(["land", "ask", "askq"]);
+const TYPES = new Set(["land", "ask", "askq", "made", "saved", "shared"]);   // made/saved/shared: FicWrapped only
 const ANSWERS = new Set(["ChatGPT", "Google", "Another AI", "Reddit", "Tumblr", "A friend", "Other", "dismissed", ""]);
 const KEEP_DAYS = 180;
 
