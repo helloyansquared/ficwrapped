@@ -295,7 +295,7 @@ function ficwrappedStart() {
     if (window.FW && window.FW.parseReadingsDoc) return Promise.resolve();
     return new Promise(function (res, rej) {
       var s = document.createElement("script");
-      s.src = SITE + "core.js?v=d1a6ff84";
+      s.src = SITE + "core.js?v=60c735c3";
       s.onload = res; s.onerror = function () { rej(new Error("core")); };
       document.head.appendChild(s);
     });

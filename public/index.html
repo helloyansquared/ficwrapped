@@ -327,9 +327,9 @@ footer a{color:#fff}
 
 <footer><div class="wrap"><nav class="foot" aria-label="Guides"><a href="/">FicWrapped</a><a href="/how-to-do-ao3-wrapped/">How to do AO3 Wrapped</a><a href="/ao3-wrapped-on-phone/">AO3 Wrapped on your phone</a><a href="/ao3-wrapped-without-password/">AO3 Wrapped without a password</a><a href="/ao3-wrapped-2025/">AO3 Wrapped 2025</a><a href="/can-people-see-my-ao3-history/">Who can see your AO3 History</a><a href="/ao3-history-export/">Export your AO3 History</a><a href="/is-ao3-wrapped-safe/">Is AO3 Wrapped safe?</a><a href="/privacy/">Privacy &amp; refunds</a><a href="https://fictoepub.yansquared.com/">FicToEpub</a><a href="https://bottobook.yansquared.com/">BotToBook</a></nav>FicWrapped is an independent fan-made tool, not affiliated with the OTW or AO3. Your History is read in your browser and never uploaded. Last updated: 25 November 2026.</div></footer>
 
-<script src="/core.js?v=d1a6ff84"></script>
-<script src="/cards.js?v=d1a6ff84"></script>
-<script src="/found.js?v=d1a6ff84" defer></script>
+<script src="/core.js?v=60c735c3"></script>
+<script src="/cards.js?v=60c735c3"></script>
+<script src="/found.js?v=60c735c3" defer></script>
 <script>
 "use strict";
 const SITE = "https://ficwrapped.yansquared.com/";
@@ -514,12 +514,13 @@ if (location.hash === "#from-ao3") {
 // ── Supporter Pack ──
 function setPro(on) { pro = on; $("pack").classList.toggle("pro", on); if (STATS) buildThumbs(); }
 if (BUY_URL) $("buy").href = BUY_URL; else $("buy").removeAttribute("href");
+$("buy").addEventListener("click", () => { if (window.Found && Found.step) Found.step("buy"); });
 async function activate(key, where) {
   const lic = store.get(LKEY); const instance = lic && lic.key === key ? lic.id : null;
   where.textContent = "Checking your key…"; where.className = "";
   try {
     const r = await (await fetch("/api/license", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ action: instance ? "validate" : "activate", license_key: key, name: "web " + new Date().toISOString().slice(0, 10), instance_id: instance }) })).json();
-    if (r.ok) { store.set(LKEY, { key, id: r.id || instance, at: Date.now() }); setPro(true); where.textContent = "Supporter Pack unlocked on this browser. Thank you!"; where.className = "ok"; return true; }
+    if (r.ok) { store.set(LKEY, { key, id: r.id || instance, at: Date.now() }); setPro(true); if (window.Found && Found.step) Found.step("paid", where.dataset.from === "checkout" ? "checkout" : "manual"); where.textContent = "Supporter Pack unlocked on this browser. Thank you!"; where.className = "ok"; return true; }
     where.textContent = { not_found: "That key wasn't found. Check it and try again.", limit: "This key is already active on 3 devices. Email us and we'll reset it.", wrong_product: "That key is for a different product.", inactive: "That key is no longer active." }[r.error] || "The key couldn't be checked. Try again in a minute.";
     where.className = "bad";
   } catch (e) { where.textContent = "Couldn't reach the license check. Are you online?"; where.className = "bad"; }
@@ -530,6 +531,7 @@ const qs = new URLSearchParams(location.search);
 if (qs.get("license_key")) {
   const key = qs.get("license_key").split(",")[0];
   history.replaceState(null, "", location.pathname);
+  $("keyMsg").dataset.from = "checkout";
   activate(key, $("keyMsg")).then(ok => { if (ok) $("keyMsg").innerHTML = `Supporter Pack unlocked. If your Wrapped is open in another tab, it has unlocked there too. Your key (also emailed to you): <code>${esc(key)}</code>`; });
   if (!DATA) { const saved = store.get(DKEY); if (saved) { DATA = saved; render(); } }
 } else if (qs.get("unlock")) history.replaceState(null, "", location.pathname);
